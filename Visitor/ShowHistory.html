@@ -13,7 +13,7 @@ body {
 
 .container {
     position:static;
-    margin: auto;
+    margin: 0 auto;
     width: 45%;
     border: 3px solid #73AD21;
     padding: auto;
@@ -21,8 +21,8 @@ body {
 }
 
 .container2 {
-    position:static;
-    margin: auto;
+    position: static;
+    margin: 0 auto;
     width: 45%;
     margin-bottom: 5%;
     margin-left: 5%
@@ -34,6 +34,13 @@ body {
     margin-right: 30%;
 }
 
+.row2 {
+    position: static;
+    margin-top: -20%;
+    margin-left: 130%;
+    margin-right: 0%;
+}
+
 </style>
 
 <div class="container">
@@ -42,9 +49,24 @@ body {
     </div>
 
     <div class="container2">
-    <form action="/action_page.php" method="POST">
+    <form action="#" method="POST">
+    <div class="row1">
         <strong>Name: &nbsp;</strong><input type="text" name="Name"> <br>
         <br><strong>Time: &nbsp;</strong><input type="datetime-local" name="Time">
+    </div>
+
+    <div class="row2">
+        <strong>Exhibits:</strong><input list="Exhibits" name="Exhibits"><br><br>
+        <datalist id="Exhibits">
+            <option value="Birds">
+            <option value="Jungle">
+            <option value="Mountainous">
+            <option value="Pacific">
+            <option value="Sahara">
+        </datalist>
+        <input type="submit" value="Search">
+    </div>
+
     </form>
     </div>
 </div>
