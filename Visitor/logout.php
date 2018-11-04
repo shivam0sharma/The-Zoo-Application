@@ -1,13 +1,16 @@
+<?php
+echo "Hello World!";
+?> 
+
+
+
 <!DOCTYPE html>
 <html>
 <body>
+    
+    
 
 <style>
-
-body {
-  background-color: rgb(230, 223, 207)
-}
-
 .center {
     margin: auto;
     width: auto;
