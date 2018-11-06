@@ -9,8 +9,8 @@
 	$_SESSION['success'] = "";
 
 	// connect to database
-    //$db = mysqli_connect('localhost', 'cs4400_group53', 'Efhjn754');
-	$db = mysqli_connect('localhost', 'root', 'root', 'cs4400_group53');
+    $db = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+    //$db = mysqli_connect('localhost', 'root', 'root', 'cs4400_group53');
 
 	// REGISTER USER
 	if (isset($_POST['register_user'])) {
