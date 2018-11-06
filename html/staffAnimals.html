@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
         <title>Staff Animal</title>
+        <script src="../js/jquery-3.3.1.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </head>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -47,7 +49,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li><a href="./staffHome.html">Home</a></li>
-            <li class="active"><a href="#">Animals</a></li>
+            <li class="active"><a href="./staffAnimals.html">Animals</a></li>
             <li><a href="./staffShows.html">Shows</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -81,7 +83,7 @@
                 <input type="text" class="form-control" id="species">
             </div>
           </div>
-          <table class="table table-bordered table-hover">
+          <table class="table table-bordered table-hover sortable">
             <thead>
               <tr>
                 <th>Name</th>
@@ -93,14 +95,14 @@
                 
             </thead>
             <tbody>
-              <tr>
+              <tr class="clickable-row" data-url="./animalCare.html">
                 <td>Name1</td>
                 <td>Species1</td>
                 <td>Exhibit1</td>
                 <td>Age1</td>
                 <td>Type1</td>
               </tr>
-              <tr>
+              <tr class="clickable-row">
                 <td>Name2</td>
                 <td>Species2</td>
                 <td>Exhibit2</td>
@@ -115,3 +117,9 @@
       </div>
     </div>
 </html>
+
+<script>
+    $(document).ready(function(){
+        
+    });
+</script>

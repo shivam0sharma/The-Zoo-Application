@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
-        <title>Staff Home Page</title>
+        <title>Staff Shows</title>
+        <script src="../js/jquery-3.3.1.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </head>
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */ 
@@ -48,7 +50,7 @@
           <ul class="nav navbar-nav">
             <li><a href="./staffHome.html">Home</a></li>
             <li><a href="./staffAnimals.html">Animals</a></li>
-            <li class="active"><a href="#">Shows</a></li>
+            <li class="active"><a href="./staffShows.html">Shows</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -64,12 +66,18 @@
         </div>
         <div class="col-sm-10 text-left"> 
           <h1>Show History</h1>
-          <table class="table table-bordered">
+          <table id="shows" class="table table-bordered sortable">
             <thead>
               <tr>
-                <th>Name</th>
-                <th>Time</th>
-                <th>Exhibit</th>
+                <th>Name
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th>Time
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
+                <th>Exhibit
+                    <i class="fa fa-sort float-right" aria-hidden="true"></i>
+                </th>
               </tr>
                 
             </thead>
@@ -92,3 +100,9 @@
       </div>
     </div>
 </html>
+
+<script>
+    $(document).ready(function(){
+
+    });
+</script>
