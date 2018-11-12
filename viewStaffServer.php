@@ -1,6 +1,8 @@
 <?php
     session_start();
-    $db = mysqli_connect('localhost', 'root', 'root', 'cs4400_group53');
+    // connect to database
+    $db = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+    //$db = mysqli_connect('localhost', 'root', 'root', 'cs4400_group53');
 
     // initialize variables
     $username = "";
