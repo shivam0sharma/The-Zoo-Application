@@ -1,3 +1,4 @@
+<!-- need to fix so that not any user can login and then change the url to this page and access it -->
 <?php
     session_start();
 
@@ -42,9 +43,25 @@
         <!-- logged in user information -->
         <?php  if (isset($_SESSION['email'])) : ?>
             <p>Welcome <strong><?php echo $_SESSION['email']; ?></strong></p>
-            <p> <a href="admin.php?logout='1'" style="color: red;">logout</a> </p>
         <?php endif ?>
-    </div>
+        &ensp;
+        <div>
+            <div>
 
+                &ensp;&ensp;&ensp;&ensp;&ensp;<a href="viewVisitor.php"><button class="btn">View Visitors</button></a>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="viewStaff.php"><button class="btn">View Staff</button></a>
+            </div>
+            <br>
+            <div>
+                &ensp;&ensp;&ensp;&ensp;&ensp;<button class="btn">View Shows</button>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="addAnimal.php"><button class="btn">View Animal</button></a>
+            </div>
+            <br>
+            <div>
+                &ensp;&ensp;&ensp;&ensp;&ensp;<button class="btn">Add Show</button>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="admin.php?logout='1'"><button class="btn">Log Out</button></a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

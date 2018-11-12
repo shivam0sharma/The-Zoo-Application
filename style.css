@@ -66,3 +66,10 @@ form, .content {
   border: 1px solid #3c763d;
   margin-bottom: 20px;
 }
+
+.center {
+    margin: auto;
+    width: 50%;
+    border: 3px solid green;
+    padding: 10px;
+}
