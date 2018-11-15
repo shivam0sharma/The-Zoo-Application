@@ -5,8 +5,10 @@ if(isset($_POST['search']))
     $nameToSearch = $_POST['showName'];
     $visitToSearch = $_POST['visitTime'];
     $exhibitToSearch = $_POST['exhibit'];
+    $timeToSearch = $_POST['time'];
 
-    $query = "SELECT * FROM `ShowTable` WHERE showTime LIKE '%".$visitToSearch."%'";
+    $query = "SELECT * FROM `ShowTable` WHERE (showTime LIKE '%".$visitToSearch."%' AND name LIKE '%".$nameToSearch."%'
+        AND location LIKE '%".$exhibitToSearch."%' AND showTime LIKE '%".$timeToSearch."%')";
     $search_result = filterTable($query);
     
 }
@@ -26,10 +28,10 @@ function filterTable($query)
     $ntwk = mysqli_connect($hostname, $username, $password, $database);
     $filter_Result = mysqli_query($ntwk, $query);
     return $filter_Result;
+    mysqli_close($ntwk);
 }
 
 ?>
-
 
 <!DOCTYPE html>
 
@@ -105,13 +107,18 @@ function filterTable($query)
 
 <div class="container2">
         <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name">
-        <br><br>
-        <strong>Time: &nbsp;</strong><input type="datetime-local" name="visitTime">
+        <br>
+        <br>
+        <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime">
+        <br>
+        <br>
+        <strong>Show Time: &nbsp; </strong><input type="time" name="time">
         <br>
         <br>
         <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits">
         <br>
         <br>
+
         <datalist id="Exhibits">
             <option value="Birds">
             <option value="Jungle">
@@ -130,12 +137,12 @@ function filterTable($query)
             <thead>
                 <tr>
                     <th scope="col">Show Name</th>
-                    <th scope="col">Time</th>
+                    <th scope="col">Date/Time</th>
                     <th scope="col">Exhibit</th>  
                 </tr>
             </thead>
 
-            <!-- populate table from mysql database -->
+                <!-- populate table from mysql database -->
                 <?php while($row = mysqli_fetch_array($search_result)):?>
                 <tr>
                     <td class="success"><?php echo $row['name'];?></td>
