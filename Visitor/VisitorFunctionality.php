@@ -120,9 +120,9 @@ body {
 <button class="btn searchExhibit">Search Exhibit</button>
 <button class="btn viewExhibitHistory">View Exhibit History</button>
 <button class="btn searchShows">Search Shows</button>
-<a href="ShowHistory.html"><button class="btn viewShowHistory">View Show History</button></a>
+<a href="ShowHistory.php"><button class="btn viewShowHistory">View Show History</button></a>
 <button class="btn searchForAnimals">Search for Animals</button>
-<a href="logout.html"><button class="btn logOut">Log Out</button></a>
+<a href="logout.php"><button class="btn logOut">Log Out</button></a>
 
 
 </h1>

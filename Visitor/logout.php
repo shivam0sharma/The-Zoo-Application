@@ -25,7 +25,7 @@ body {
 	<p>You have been successfully logged out of your account.</p>
 	<p>
         <a class="btn btn-success btn-lg" href="#">
-            <i class="fa fa-user"></i> Log in again</a>
+            <a href="#"> <button type="button"> Login again!</button> </a>
 	</p>
 </div>
 
