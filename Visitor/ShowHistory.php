@@ -5,15 +5,10 @@ if(isset($_POST['search']))
     $nameToSearch = $_POST['showName'];
     $visitToSearch = $_POST['visitTime'];
     $exhibitToSearch = $_POST['exhibit'];
-<<<<<<< HEAD
     $timeToSearch = $_POST['time'];
 
     $query = "SELECT * FROM `ShowTable` WHERE (showTime LIKE '%".$visitToSearch."%' AND name LIKE '%".$nameToSearch."%'
         AND location LIKE '%".$exhibitToSearch."%' AND showTime LIKE '%".$timeToSearch."%')";
-=======
-
-    $query = "SELECT * FROM `ShowTable` WHERE showTime LIKE '%".$visitToSearch."%'";
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
     $search_result = filterTable($query);
     
 }
@@ -33,18 +28,11 @@ function filterTable($query)
     $ntwk = mysqli_connect($hostname, $username, $password, $database);
     $filter_Result = mysqli_query($ntwk, $query);
     return $filter_Result;
-<<<<<<< HEAD
     mysqli_close($ntwk);
-=======
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
 }
 
 ?>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
 <!DOCTYPE html>
 
 <html>
@@ -119,26 +107,18 @@ function filterTable($query)
 
 <div class="container2">
         <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name">
-<<<<<<< HEAD
         <br>
         <br>
         <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime">
         <br>
         <br>
         <strong>Show Time: &nbsp; </strong><input type="time" name="time">
-=======
-        <br><br>
-        <strong>Time: &nbsp;</strong><input type="datetime-local" name="visitTime">
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
         <br>
         <br>
         <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits">
         <br>
         <br>
-<<<<<<< HEAD
 
-=======
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
         <datalist id="Exhibits">
             <option value="Birds">
             <option value="Jungle">
@@ -157,20 +137,12 @@ function filterTable($query)
             <thead>
                 <tr>
                     <th scope="col">Show Name</th>
-<<<<<<< HEAD
                     <th scope="col">Date/Time</th>
-=======
-                    <th scope="col">Time</th>
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
                     <th scope="col">Exhibit</th>  
                 </tr>
             </thead>
 
-<<<<<<< HEAD
                 <!-- populate table from mysql database -->
-=======
-            <!-- populate table from mysql database -->
->>>>>>> 058eaa51d0b7880f3c080820dd643ffb697fc98e
                 <?php while($row = mysqli_fetch_array($search_result)):?>
                 <tr>
                     <td class="success"><?php echo $row['name'];?></td>
