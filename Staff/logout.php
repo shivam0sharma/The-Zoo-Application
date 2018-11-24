@@ -3,6 +3,9 @@
     <head>
         <title>Zoo Logout</title>
         <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 <body>
 
@@ -47,6 +50,4 @@ body {
 
 </body>
 </html>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/jquery-3.3.1.js"></script>
-<script src="../js/npm.js"></script>
+
