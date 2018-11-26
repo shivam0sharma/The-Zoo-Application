@@ -11,7 +11,8 @@ if(isset($_POST['search']))
     /*$query = "SELECT * FROM `Animal` WHERE (name LIKE '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
     */
-    $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."')";
+    $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
     $search_result = filterTable($query);
     
 }
@@ -78,6 +79,18 @@ body {
   cursor:pointer;
 }
 
+th:hover{
+    cursor: pointer;
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
+table {
+    border: 1px solid black;
+}
+
 </style>
 </head>
 
@@ -109,17 +122,18 @@ body {
                         </select>
                     </div>
                     <br>
-                    <div class="form-group row" style="padding-top:10px">
-                        <label for="exhibit">Exhibit: </label>
-                        <select class ="form-control">
+                    <div class="form-group row"  style="padding-top:10px">
+                        <label for="exhibit" >Exhibit: </label>
+                        <select class ="form-control" name="exhibit">
+                            <option></option>
                             <option>Birds</option>
                             <option>Jungle</option>
                             <option>Mountainous</option>
                             <option>Pacific</option>
                             <option>Sahara</option>
                         </select>
-                        <label for="age-min" name="ageMin">Min Age: </label>
-                        <select class="form-control" id="age-min"style="padding-left:5px">
+                        <label for="age-min" >Min Age: </label>
+                        <select class="form-control" name="ageMin" id="age-min"style="padding-left:5px">
                             <option selected="selected">1</option>
                             <option>2</option>
                             <option>3</option>
@@ -129,8 +143,8 @@ body {
                             <option>7</option>
                             <option>8</option>
                         </select>
-                        <label for="age-max" name="ageMax">Max Age: </label>
-                        <select class="form-control" id="age-max">
+                        <label for="age-max" >Max Age: </label>
+                        <select class="form-control" name="ageMax" id="age-max">
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -148,13 +162,13 @@ body {
     
     <div>
     <table class="table table-bordered" id="animalTable">
-                <tr>
+                <thead>
                     <th onclick="sortTable(0)">Name</th>
                     <th onclick="sortTable(1)">Species</th>
                     <th onclick="sortTable(2)">Exhibit</th>
                     <th onclick="sortTable(3)">Age</th>
                     <th onclick="sortTable(4)">Type</th>
-                </tr>
+                </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
                 <tr>
                     <td><?php echo $row['name']; ?></td>
@@ -169,6 +183,23 @@ body {
     </div>
 </div>
 <script>
+$("document").ready(function() {
+    $("tr").click(function() {
+        var tableData = $(this).children("td").map(function() {
+            return $(this).text();
+        }).get();
+
+        console.log(tableData);
+
+        var location = "http://localhost/Staff/AnimalCare.php?";
+        location = location + "name=" + tableData[0];
+        location = location + "&species=" + tableData[1];
+        location = location.replace(/ /g, "_");
+
+        window.location = location;
+    });
+});
+
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("animalTable");
