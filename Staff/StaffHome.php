@@ -1,6 +1,5 @@
 <?php
     session_start();
-
     if (!isset($_SESSION['email'])) {
     // redirect user to index.php page
         $_SESSION['msg'] = "You must log in first";

@@ -82,7 +82,7 @@
 
 	// LOGIN USER
 	if (isset($_POST['login_user'])) {
-		$email = $_POST['email'];
+        $email = $_POST['email'];
 		$password = $_POST['password'];
 
 		if (empty($email)) {
@@ -101,6 +101,7 @@
                 // get userType
                 $row = $results->fetch_assoc();
                 $userType = $row["userType"];
+                $username = $row['username'];
 
                 $_SESSION['email'] = $email;
                 $_SESSION['username'] = $username;

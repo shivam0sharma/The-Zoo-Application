@@ -113,6 +113,7 @@ table {
                         <input type="text" class="form-control" name="species">
                         <label for="type">Type: </label>
                         <select class="form-control" name="type">
+                            <option></option>
                             <option>Mammal</option>
                             <option>Bird</option>
                             <option>Amphibian</option>

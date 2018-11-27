@@ -1,12 +1,26 @@
 <?php
-    session_start();
+session_start();
+
+if (!isset($_SESSION['email'])) {
+// redirect user to index.php page
+    $_SESSION['msg'] = "You must log in first";
+    header('location: index.php');
+}
+
+if (isset($_GET['logout'])) {
+// redirect user to index.php page
+    session_destroy();
+    unset($_SESSION['email']);
+    unset($_SESSION['username']);
+    header("location: ../index.php");
+}
     $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
     $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
     $password ="Efhjn754"; /* the password for phpmyadmin */
     $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
     $ntwk = mysqli_connect($hostname, $username, $password, $database);
-    $email = $_SESSION['email'];
-    $query = "SELECT * FROM ShowTable";
+    $user = $_SESSION['username'];
+    $query = "SELECT * FROM ShowTable WHERE host = '$user'";
     $result = mysqli_query($ntwk, $query);
 
 
