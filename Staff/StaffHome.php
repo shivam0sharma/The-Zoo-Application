@@ -11,6 +11,7 @@
     // redirect user to index.php page
         session_destroy();
         unset($_SESSION['email']);
+        unset($_SESSION['username']);
         header("location: ../index.php");
     }
 

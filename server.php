@@ -63,6 +63,7 @@
 
                 // redirect user to visitor's home page
                 $_SESSION['email'] = $email;
+                $_SESSION['username'] = $username;
                 $_SESSION['success'] = "You are now logged in";
                 header('location: Visitor/VisitorFunctionality.php');
             } else {
@@ -72,6 +73,7 @@
                 mysqli_query($db, $add_staff_query);
                 // redirect user to visitor's home page
                 $_SESSION['email'] = $email;
+                $_SESSION['username'] = $username;
                 $_SESSION['success'] = "You are now logged in";
                 header('location: Staff/StaffHome.php');
             }
@@ -101,6 +103,7 @@
                 $userType = $row["userType"];
 
                 $_SESSION['email'] = $email;
+                $_SESSION['username'] = $username;
                 $_SESSION['success'] = "You are now logged in";
 
                 // redirect user to designated home page
