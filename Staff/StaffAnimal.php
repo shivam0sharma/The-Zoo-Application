@@ -113,6 +113,7 @@ table {
                         <input type="text" class="form-control" name="species">
                         <label for="type">Type: </label>
                         <select class="form-control" name="type">
+                            <option></option>
                             <option>Mammal</option>
                             <option>Bird</option>
                             <option>Amphibian</option>
@@ -170,7 +171,7 @@ table {
                     <th onclick="sortTable(4)">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
-                <tr>
+                <tr class="data">
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['species']; ?></td>
                     <td><?php echo $row['exhibit']; ?></td>
@@ -184,17 +185,18 @@ table {
 </div>
 <script>
 $("document").ready(function() {
-    $("tr").click(function() {
+    $("tr.data").click(function() {
         var tableData = $(this).children("td").map(function() {
             return $(this).text();
         }).get();
 
-        console.log(tableData);
+        
 
         var location = "http://localhost/Staff/AnimalCare.php?";
         location = location + "name=" + tableData[0];
         location = location + "&species=" + tableData[1];
         location = location.replace(/ /g, "_");
+        console.log(location);
 
         window.location = location;
     });
