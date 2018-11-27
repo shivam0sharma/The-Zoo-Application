@@ -3,16 +3,16 @@
     session_start();
 
     if (!isset($_SESSION['email'])) {
-    // redirect user to login.php page
+    // redirect user to index.php page
         $_SESSION['msg'] = "You must log in first";
-        header('location: login.php');
+        header('location: index.php');
     }
 
     if (isset($_GET['logout'])) {
-    // redirect user to login.php page
+    // redirect user to index.php page
         session_destroy();
         unset($_SESSION['email']);
-        header("location: login.php");
+        header("location: index.php");
     }
 
 ?>
@@ -48,18 +48,17 @@
         <div>
             <div>
 
-                &ensp;&ensp;&ensp;&ensp;&ensp;<a href="viewVisitor.php"><button class="btn">View Visitors</button></a>
-                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="viewStaff.php"><button class="btn">View Staff</button></a>
+                &ensp;&ensp;&ensp;&ensp;<a href="viewVisitor.php"><button class="btn">View Visitors</button></a>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="viewStaff.php"><button class="btn">View Staff</button></a>
             </div>
             <br>
             <div>
-                &ensp;&ensp;&ensp;&ensp;&ensp;<button class="btn">View Shows</button>
-                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="addAnimal.php"><button class="btn">View Animal</button></a>
+                &ensp;&ensp;<a href="addViewShow.php"><button class="btn">Add/View Shows</button></a>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="addViewAnimal.php"><button class="btn">Add/View Animal</button></a>
             </div>
             <br>
             <div>
-                &ensp;&ensp;&ensp;&ensp;&ensp;<button class="btn">Add Show</button>
-                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="admin.php?logout='1'"><button class="btn">Log Out</button></a>
+                &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<a href="admin.php?logout='1'"><button class="btn">Log Out</button></a>
             </div>
         </div>
     </div>

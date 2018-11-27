@@ -3,16 +3,16 @@
     session_start();
 
     if (!isset($_SESSION['email'])) {
-    // redirect user to login.php page
+    // redirect user to index.php page
         $_SESSION['msg'] = "You must log in first";
-        header('location: login.php');
+        header('location: index.php');
     }
 
     if (isset($_GET['logout'])) {
-    // redirect user to login.php page
+    // redirect user to index.php page
         session_destroy();
         unset($_SESSION['email']);
-        header("location: login.php");
+        header("location: index.php");
     }
 
 ?>

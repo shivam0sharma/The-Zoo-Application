@@ -11,7 +11,7 @@
 		<h2>Login</h2>
 	</div>
 
-	<form method="post" action="index.php">
+	<form method="post" action="login.php">
 
 		<?php include('errors.php'); ?>
 
