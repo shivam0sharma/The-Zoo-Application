@@ -64,7 +64,7 @@
                 // redirect user to visitor's home page
                 $_SESSION['email'] = $email;
                 $_SESSION['success'] = "You are now logged in";
-                header('location: visitor.php');
+                header('location: Visitor/VisitorFunctionality.php');
             } else {
                 // insert to staff
                 $add_staff_query = "INSERT INTO Staff (username)
@@ -73,7 +73,7 @@
                 // redirect user to visitor's home page
                 $_SESSION['email'] = $email;
                 $_SESSION['success'] = "You are now logged in";
-                header('location: staff.php');
+                header('location: Staff/StaffHome.php');
             }
 		}
 	}
@@ -109,10 +109,10 @@
                     header('location: admin.php');
                 } else if ($userType === "Staff") {
                     // redirect user to staff.php page
-                    header('location: staff.php');
+                    header('location: Staff/StaffHome.php');
                 } else {
                     // redirect user to visitor.php page
-                    header('location: visitor.php');
+                    header('location: Visitor/VisitorFunctionality.php');
                 }
 			} else {
 				array_push($errors, "Wrong email/password combination");
