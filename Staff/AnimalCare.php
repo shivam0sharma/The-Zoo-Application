@@ -1,5 +1,4 @@
 <?php
-    session_start();
     $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
     $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
     $password ="Efhjn754"; /* the password for phpmyadmin */
