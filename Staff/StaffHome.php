@@ -1,3 +1,20 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['email'])) {
+    // redirect user to index.php page
+        $_SESSION['msg'] = "You must log in first";
+        header('location: index.php');
+    }
+
+    if (isset($_GET['logout'])) {
+    // redirect user to index.php page
+        session_destroy();
+        unset($_SESSION['email']);
+        header("location: ../index.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,7 +102,7 @@ body {
 <h1 style="text-align:center;">
 <a href="StaffAnimal.php"><button class="btn searchAnimal">Search Animals</button></a>
 <a href="StaffShow.php"><button class="btn viewShows">View Shows</button></a>
-<a href="logout.php"><button class="btn logOut">Log Out</button></a>
+<a href="StaffHome.php?logout='1'"><button class="btn logOut">Log Out</button></a>
 
 
 </h1>
