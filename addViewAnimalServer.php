@@ -50,7 +50,10 @@
         $age_min = $_POST['age_min'];
         $age_max = $_POST['age_max'];
         $exhibit = $_POST['exhibit'];
+<<<<<<< HEAD
+=======
         // $valueToSearch = $_POST['valueToSearch'];
+>>>>>>> 48349cc0f11d78ad7995cb517323f4217fad8189
 
         // form validation: ensure that the form is correctly filled
         if (empty($name)) { array_push($errors, "Name is required"); }

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
+=======
 <!-- need to fix so that not any user can login and then change the url to this page and access it -->
+>>>>>>> 48349cc0f11d78ad7995cb517323f4217fad8189
 <?php
     session_start();
 
