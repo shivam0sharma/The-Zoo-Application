@@ -32,7 +32,10 @@
         &ensp;Max
         <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num">
         &emsp;&emsp;&emsp;&emsp;&emsp;Water Feature:
-        <input type="checkbox" name="wfeat_checkbox">
+        <select type="text" name="wfeat">
+            <option></option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
         <br>
         <br>
         <input type="submit" name="search" value="Search">
@@ -48,7 +51,6 @@
             $max_num = $_POST['max_animal_num'];
             $min_size = $_POST['min_exhibit_num'];
             $max_size = $_POST['max_exhibit_num'];
-            $water_feature = $_POST['wfeat_checkbox'];
 
 
 
