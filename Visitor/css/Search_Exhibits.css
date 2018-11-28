@@ -1,0 +1,33 @@
+
+.animal_num {
+  width: 50px;
+}
+
+.exhibit_num {
+  width: 70px;
+}
+
+h1 {
+  text-align: center
+}
+
+#search_params {
+  text-align: center
+}
+
+table {
+  width: 100%;
+  border: 1px solid gainsboro;
+}
+
+th {
+  height: 50px;
+  text-align: left;
+  padding-left: 1%;
+  padding-bottom: 20px;
+}
+
+td {
+  text-align: left;
+  padding-left: 1%;
+}
