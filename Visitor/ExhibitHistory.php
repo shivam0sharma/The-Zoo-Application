@@ -13,7 +13,6 @@
       }
 
        $user = $_SESSION['username'];
-       //$queryCount = "SELECT COUNT(*) AS Num_of_Visit FROM ExhibitVisit WHERE visitor = '$user' GROUP BY exhibit,visitor,";
        $query = "SELECT a.exhibit, a.visitTime, b.visits FROM ExhibitVisit a
        join (SELECT exhibit, COUNT(*) visits FROM ExhibitVisit where visitor = '$user' and exhibit like '%".$nameToSearch."%' and visitTime like '%".$visitDateToSearch."%') b 
        on a.exhibit = b.exhibit where a.visitor = '$user' and a.exhibit like '%".$nameToSearch."%' and a.visitTime like '%".$visitDateToSearch."%'";
