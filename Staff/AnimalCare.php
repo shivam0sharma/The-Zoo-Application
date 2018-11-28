@@ -1,4 +1,5 @@
 <?php
+    session_start();
     $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
     $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
     $password ="Efhjn754"; /* the password for phpmyadmin */
@@ -12,6 +13,32 @@
     $details = mysqli_fetch_array($details);
     $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')";
     $result = mysqli_query($ntwk, $query);
+
+    if(isset($_POST['log'])) {
+        $errors = array();
+        $user = $_SESSION['username'];
+        $msg = $_POST['msg'];
+        if (empty($msg)) { array_push($errors, "Message is required"); }
+
+        $insert = "INSERT INTO TreatmentNote (staff, species, animal, noteTime, message)
+        VALUES ('$user', '$species', '$name', NOW(), '$msg')";
+        if (count($errors) == 0) {
+            $insertCmd = mysqli_query($ntwk, $insert);
+            if ($insertCmd) {
+                $insert_result = '<div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Log Recorded!</div>';
+            } else {
+                $insert_result = '<div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Log Not Recorded!</div>';
+            }
+        } else {
+            $insert_result = '<div class="alert alert-warning"
+            ><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            No message input!</div>';
+        }
+    }
     
 ?>
 <!DOCTYPE html>
@@ -47,6 +74,10 @@ body {
 }
 th:hover{
     cursor: pointer;
+}
+
+.alert{
+    width: 25%;
 }
 </style>
 </head>
@@ -89,10 +120,13 @@ th:hover{
         </div>
 
         <div class="row">
-            <div class="form-inline" method="post" action="AnimalCare.php">
+            <form id="logForm"method="post" action=>
                 <textarea name="msg" rows="4" cols="50" maxlength="200"></textarea>
-                <input class="btn" type="submit" name="log" value="Log Notes">
-            </div>
+                <button class="btn" type="submit" name="log">Log Notes</button>
+                <div class="col-sm-10 col-sm-offset-2">
+                    <?php echo $insert_result; ?>    
+                </div>
+            </form>
         </div>
         
     </div>
@@ -129,6 +163,7 @@ var speciesIn = queries[1].substring(index + 1);
 speciesIn = speciesIn.replace(/_/g, " ");
 $("#name").text("Name: " + nameIn);
 $("#species").text("Species: " + speciesIn);
+$("#logForm").action = window.location.href;
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("treatmentTable");
