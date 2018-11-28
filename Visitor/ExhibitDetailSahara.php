@@ -34,6 +34,9 @@
          body {
          background-color: rgb(246,242,241);
          }
+         th:hover{
+         cursor: pointer;
+         }
          tr:hover {
          cursor: pointer;
          } 
@@ -90,7 +93,12 @@
 
             <h4>Exhibit Name: Sahara <br><?php while($row = $filterQuery4-> fetch_assoc()) {
                echo "Size: ".$row["size"]." <br>";
-               echo "Water Feature (1 is True, 0 is False): ".$row["waterFeature"]." <br>";
+               echo "Water Feature: ";
+               if ($row["waterFeature"]) {
+                  echo "Yes <br>";
+               } else {
+                  echo "No <br>";
+               }
                }
             ?>
             <?php while($row = $filterQuery3-> fetch_assoc()) {
@@ -116,11 +124,11 @@
    ?>
    </form>
                <div class="row">
-                  <table class="table table-striped">
+                  <table class="table table-striped" id="exhibitTable">
                      <thead>
                         <tr>
-                           <th scope="col">Animal Name</th>
-                           <th scope="col">Species</th>
+                           <th scope="col" onclick="sortTable(0)">Animal Name</th>
+                           <th scope="col" onclick="sortTable(1)">Species</th>
                         </tr>
                      </thead>
                      <!-- populate table from mysql database -->
@@ -142,8 +150,6 @@ $("document").ready(function() {
             return $(this).text();
         }).get();
 
-        console.log(tableData);
-
         var location = "./AnimalDetail.php?";
         location = location + "name=" + tableData[0];
         location = location + "&species=" + tableData[1];
@@ -152,6 +158,60 @@ $("document").ready(function() {
         window.location = location;
     });
    });
+   function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("exhibitTable");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc"; 
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++; 
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
 </script>
    </body>
 </html>

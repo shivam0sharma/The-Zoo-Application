@@ -90,6 +90,7 @@ th:hover{
 <div class="center">
     <div class="container">
         <a href="StaffHome.php"><button class="btn">Go Home</button></a>
+        <a href="StaffAnimal.php"><button class="btn">Go Back</button></a>
     </div>
     <br>
     <div class="container">

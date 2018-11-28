@@ -191,8 +191,6 @@ $("document").ready(function() {
             return $(this).text();
         }).get();
 
-        console.log(tableData);
-
         var location = "./AnimalCare.php?";
         location = location + "name=" + tableData[0];
         location = location + "&species=" + tableData[1];
