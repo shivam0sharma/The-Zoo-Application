@@ -3,15 +3,20 @@
    if(isset($_POST['search'])) {
        $nameToSearch = $_POST['exhibitName'];
        $visitDateToSearch = $_POST['visitDate'];
-       $visitTimeToSearch = $_POST['visitTime'];
        $minToSearch = $_POST['minNum'];
+       if (empty($minToSearch)) {
+         $minToSearch = 1;
+      }
        $maxToSearch = $_POST['maxNum'];
+       if (empty($maxToSearch)) {
+         $maxToSearch = 1000;
+      }
 
        $user = $_SESSION['username'];
-       //$queryCount = "SELECT COUNT(*) AS Num_of_Visit FROM ExhibitVisit WHERE visitor = '$user' GROUP BY exhibit,visitor,visitTime";
-       $query = "SELECT exhibit,visitTime,COUNT(*) AS Num_of_Visit FROM `ExhibitVisit` 
-         WHERE visitor = '$user' AND exhibit LIKE '%".$nameToSearch."%' AND visitTime LIKE '%".$visitDateToSearch."%'
-         AND visitTime LIKE '%".$visitTimeToSearch."%' GROUP BY exhibit,visitTime,visitor";
+       //$queryCount = "SELECT COUNT(*) AS Num_of_Visit FROM ExhibitVisit WHERE visitor = '$user' GROUP BY exhibit,visitor,";
+       $query = "SELECT a.exhibit, a.visitTime, b.visits FROM ExhibitVisit a
+       join (SELECT exhibit, COUNT(*) visits FROM ExhibitVisit where visitor = '$user' and exhibit like '%".$nameToSearch."%' and visitTime like '%".$visitDateToSearch."%') b 
+       on a.exhibit = b.exhibit where a.visitor = '$user' and a.exhibit like '%".$nameToSearch."%' and a.visitTime like '%".$visitDateToSearch."%'";
        $search_result = filterTable($query);
 }
        // function to connect and execute the query
@@ -89,9 +94,6 @@
                <strong>Visited Date: &nbsp;</strong><input type="date" name="visitDate">
                <br>
                <br>
-               <strong>Visited Time: &nbsp; </strong><input type="time" name="visitTime">
-               <br>
-               <br>
                <strong>Num of Visit - Min: &nbsp; </strong><input type="text" name="minNum">
                <br>
                <br>
@@ -117,10 +119,12 @@
                         </tr>
                      </thead>
                      <!-- populate table from mysql database -->
-                     <?php while($row = mysqli_fetch_array($search_result)):?>
-                     <tr>
-                        <td class="success"><?php 
+                     <?php while($row = mysqli_fetch_array($search_result)):
+                     if ($row['visits'] >= $minToSearch && $row['visits'] <= $maxToSearch) {
+                        echo '<tr>';
+                        echo '<td class="success">'; 
                         foreach($row as $column) {
+                           
                            if ($column == 'Birds') {
                               echo "<a href='ExhibitDetailBirds.php?'</a>";
                            }
@@ -137,11 +141,13 @@
                               echo "<a href='ExhibitDetailSahara.php?'</a>";
                            }
                         }
+
                         echo $row['exhibit'];?></td>
-                        <td class="danger"><?php echo $row['visitTime'];?></td>
-                        <td class="info"><?php echo $row['Num_of_Visit'];?></td>
-                     </tr>
-                     <?php endwhile;?>
+                        <td class="danger"><?php echo $row["visitTime"];?></td>
+                        <td class="info"><?php echo $row["visits"];?></td>
+                        </tr>
+
+                     <?php } endwhile?>
                   </table>
                </div>
             </div>
