@@ -1,12 +1,15 @@
 <?php
+   session_start();
    if(isset($_POST['search'])) {
        $nameToSearch = $_POST['showName'];
        $visitToSearch = $_POST['visitTime'];
        $timeToSearch = $_POST['time'];
        $exhibitToSearch = $_POST['exhibit'];
    
+       $user = $_SESSION['username'];
        $query = "SELECT * FROM `ShowVisit` INNER JOIN `ShowTable` ON showName = name WHERE name LIKE '%".$nameToSearch."%'
-           AND showTime LIKE '%".$visitToSearch."%' AND showTime LIKE '%".$timeToSearch."%' AND location LIKE '%".$exhibitToSearch."%'";
+           AND showTime LIKE '%".$visitToSearch."%' AND showTime LIKE '%".$timeToSearch."%' AND location LIKE '%".$exhibitToSearch."%'
+           AND visitor = '$user'";
        $search_result = filterTable($query);
    }
        // function to connect and execute the query
@@ -19,6 +22,7 @@
        $filter_Result = mysqli_query($ntwk, $query);
        return $filter_Result;
        mysqli_close($ntwk);
+       //session_destroy();
       }
    
    ?>
@@ -97,9 +101,12 @@
                   <option value="Pacific">
                   <option value="Sahara">
                </datalist>
+               <div>
                <input type="submit" name="search" value="Search">
-               <div class="row2">
                <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
+               </div>
+               <br>
+               <div class="row2">
                </div>
                <br>
                <br>

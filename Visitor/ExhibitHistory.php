@@ -7,9 +7,11 @@
        $minToSearch = $_POST['minNum'];
        $maxToSearch = $_POST['maxNum'];
 
+       $user = $_SESSION['username'];
+       //$queryCount = "SELECT COUNT(*) AS Num_of_Visit FROM ExhibitVisit WHERE visitor = '$user' GROUP BY exhibit,visitor,visitTime";
        $query = "SELECT exhibit,visitTime,COUNT(*) AS Num_of_Visit FROM `ExhibitVisit` 
-         WHERE exhibit LIKE '%".$nameToSearch."%' AND visitTime LIKE '%".$visitDateToSearch."%'
-         AND visitTime LIKE '%".$visitTimeToSearch."%' GROUP BY exhibit,visitor,visitTime";
+         WHERE visitor = '$user' AND exhibit LIKE '%".$nameToSearch."%' AND visitTime LIKE '%".$visitDateToSearch."%'
+         AND visitTime LIKE '%".$visitTimeToSearch."%' GROUP BY exhibit,visitTime,visitor";
        $search_result = filterTable($query);
 }
        // function to connect and execute the query
@@ -22,7 +24,7 @@
        $filter_Result = mysqli_query($ntwk, $query);
        return $filter_Result;
        mysqli_close($ntwk);
-       session_destroy();
+       //session_destroy();
       }
 ?>
 <!DOCTYPE html>
@@ -96,9 +98,12 @@
                <strong>Num of Visit - Max: &nbsp; </strong><input type="text" name="maxNum">
                <br>
                <br>
+               <div>
                <input type="submit" name="search" value="Search">
+               <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
+               </div>
+               <br>
                <div class="row2">
-                  <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
                </div>
                <br>
                <br>
