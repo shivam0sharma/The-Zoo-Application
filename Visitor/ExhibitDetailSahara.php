@@ -1,5 +1,6 @@
 <?php
-   
+       session_start();
+       $user = $_SESSION['username'];
        $query = "SELECT name,species FROM `Animal` WHERE exhibit='Sahara'";
        $search_result = filterTable($query);
        // function to connect and execute the query
@@ -64,13 +65,29 @@
          Exhibit Details - Sahara
          <h4>
          <br>
-      </div>
+      </div>        
       <div class="row">
             <div class="container2">
                 <a href="VisitorFunctionality.php"> <button type="button"> Go Home! </button></a>
                 <a href="ExhibitHistory.php"> <button type="button"> Exhibit History Page</button></a>
                <br>
                <br>
+               <form method="post"><input type="submit" name="submit" value="Log Visit"/>
+   <?php
+      if(isset($_POST['submit'])) {
+         date_default_timezone_set("America/New_York");
+         $currentTime = date("Y-m-d H:i:s");
+         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+         $password ="Efhjn754"; /* the password for phpmyadmin */
+         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+         $ntwk = mysqli_connect($hostname, $username, $password, $database);
+         $user = $_SESSION['username'];
+         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Sahara','$currentTime')";
+         $result = mysqli_query($ntwk,$query2);
+   }
+   ?>
+   </form>
                <div class="row">
                   <table class="table table-striped">
                      <thead>
@@ -82,7 +99,13 @@
                      <!-- populate table from mysql database -->
                      <?php while($row = mysqli_fetch_array($search_result)):?>
                      <tr>
-                        <td class="success"><?php echo $row['name'];?></a></td>
+                        <td class="success"><?php
+                         foreach($row as $column) {
+                            if ($column == $row['name']) {
+                               echo "<a href='AnimalDetail.php?'</a>";
+                            }
+                         }
+                        echo $row['name'];?></a></td>
                         <td class="danger"><?php echo $row['species'];?></td>
                      </tr>
                      <?php endwhile;?>

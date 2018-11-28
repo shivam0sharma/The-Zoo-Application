@@ -1,4 +1,6 @@
 <?php
+       session_start();
+       $user = $_SESSION['username'];
        $query = "SELECT name,species FROM `Animal` WHERE exhibit='Birds'";
        $search_result = filterTable($query);
        // function to connect and execute the query
@@ -63,30 +65,52 @@
          Exhibit Details - Birds
          <h4>
          <br>
-      </div>
-      <form method="post">
-    <input type="submit" name="submit" value="submt"/>
-    <?php
-if(isset($_POST['submit']))
-{
-   $currentTime = date("Y-m-d H:i:s");
-   $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
-       $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
-       $password ="Efhjn754"; /* the password for phpmyadmin */
-       $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
-       $ntwk = mysqli_connect($hostname, $username, $password, $database);
-   $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('visitor','Birds','$currentTime')";
-     $result = mysql_query($ntwk,$query2);
-}
-?>
-</form>
-                    
+      </div>        
       <div class="row">
             <div class="container2">
                 <a href="VisitorFunctionality.php"> <button type="button"> Go Home! </button></a>
                 <a href="ExhibitHistory.php"> <button type="button"> Exhibit History Page</button></a>
                <br>
                <br>
+            <?php
+            
+            $query3 = "SELECT COUNT(name) AS Num_of_Animals FROM `Animal` WHERE exhibit='Birds'";
+            $query4 = "SELECT * FROM Exhibit WHERE name = 'Birds'";
+            $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+            $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+            $password ="Efhjn754"; /* the password for phpmyadmin */
+            $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+            $ntwk = mysqli_connect($hostname, $username, $password, $database);
+            $filterQuery3 = mysqli_query($ntwk, $query3);
+            $filterQuery4 = mysqli_query($ntwk, $query4);?>
+
+            <h4>Exhibit Name: Birds <br><?php while($row = $filterQuery4-> fetch_assoc()) {
+               echo "Size: ".$row["size"]." <br>";
+               echo "Water Feature (1 is True, 0 is False): ".$row["waterFeature"]." <br>";
+               }
+            ?>
+            <?php while($row = $filterQuery3-> fetch_assoc()) {
+               echo "Number of Animals: ".$row["Num_of_Animals"]." <br>";
+               }
+            ?>
+            </h4>
+               
+               <form method="post"><input type="submit" name="submit" value="Log Visit"/>
+   <?php
+      if(isset($_POST['submit'])) {
+         date_default_timezone_set("America/New_York");
+         $currentTime = date("Y-m-d H:i:s");
+         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+         $password ="Efhjn754"; /* the password for phpmyadmin */
+         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+         $ntwk = mysqli_connect($hostname, $username, $password, $database);
+         $user = $_SESSION['username'];
+         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Birds','$currentTime')";
+         $result = mysqli_query($ntwk,$query2);
+   }
+   ?>
+   </form>
                <div class="row">
                   <table class="table table-striped">
                      <thead>
