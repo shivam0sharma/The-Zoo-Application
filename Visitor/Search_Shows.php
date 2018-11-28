@@ -1,8 +1,3 @@
-<?php
-    session_start();
-?>
-
-<?php include('Search_Shows_Server.php'); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,13 +19,35 @@
         <input type="date" name="date" id="date">
         &emsp;Exhibit:
         <select name="select_exhibit" id="exhibit">
+            <option></option>
             <option value="pacific">Pacific</option>
+            <option value="jungle">Jungle</option>
         </select>
         <br>
         <br>
         <input type="submit" name="search" value="Search">
 
     </form>
+
+    <?php
+        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+        if (isset($_POST['search'])) {
+            $name = $_POST['name'];
+            $exhibit = $_POST['select_exhibit'];
+            $date = $_POST['date'];
+
+            $sql = "SELECT name, location, showTime 
+            FROM ShowTable 
+            WHERE name like '%" . $name . "%' 
+            AND location like '%" . $exhibit . "%'
+            AND showTime like '%" . $date . "%'";
+    
+            $result = mysqli_query($conn, $sql);
+        } else {
+            $sql = "SELECT name, location, showTime FROM ShowTable";
+            $result = mysqli_query($conn, $sql);
+        }
+    ?>
 
     <table>
         <thead>
