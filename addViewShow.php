@@ -104,7 +104,7 @@ th.head {
                 <td><?php echo $row['location']; ?></td>
                 <td><?php echo date('d/m/y  h:i A', strtotime($row['showTime'])) ; ?></td>
                 <td>
-                    <a href="addViewShowServer.php?del=<?php echo $row['name']; ?>" class="del_btn">Delete</a>
+                    <a href="addViewShowServer.php?del_name=<?php echo $row['name']; ?>&del_time=<?php echo $row['showTime']; ?>" class="del_btn">Delete</a>
                 </td>
             </tr>
         <?php } ?>

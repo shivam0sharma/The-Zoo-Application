@@ -36,9 +36,10 @@
         }
     }
 
-    if (isset($_GET['del'])) {
-        $name = $_GET['del'];
-        mysqli_query($db, "DELETE FROM Animal WHERE name='$name'");
+    if (isset($_GET['del_name'])) {
+        $name = $_GET['del_name'];
+        $species = $_GET['del_species'];
+        mysqli_query($db, "DELETE FROM Animal WHERE name='$name' AND species='$species'");
         $_SESSION['message'] = "Animal deleted!";
         header('location: addViewAnimal.php');
     }

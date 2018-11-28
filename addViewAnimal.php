@@ -118,7 +118,7 @@ th.head {
                 <td><?php echo $row['age']; ?></td>
                 <td><?php echo $row['animalType']; ?></td>
                 <td>
-                    <a href="addViewAnimalServer.php?del=<?php echo $row['name']; ?>" class="del_btn">Delete</a>
+                    <a href="addViewAnimalServer.php?del_name=<?php echo $row['name']; ?>&del_species=<?php echo $row['species']; ?>" class="del_btn">Delete</a>
                 </td>
             </tr>
         <?php } ?>
