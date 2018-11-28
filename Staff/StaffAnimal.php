@@ -6,9 +6,13 @@ if(isset($_POST['search']))
     $exhibitToSearch = $_POST['exhibit'];
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
+    if ($ageMaxToSearch < $ageMinToSearch) {
+        $ageMinToSearch = 0;
+        $ageMaxToSearch = 100;
+    }
     $typeToSearch = $_POST['type'];
     $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
-        AND exhibit LIKE '%".$exhibitToSearch."%' AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'    AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
     $search_result = filterTable($query);
     
 }
@@ -167,7 +171,7 @@ table {
                     <th onclick="sortTable(4)">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
-                <tr>
+                <tr class="data">
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['species']; ?></td>
                     <td><?php echo $row['exhibit']; ?></td>
@@ -181,7 +185,7 @@ table {
 </div>
 <script>
 $("document").ready(function() {
-    $("tr").click(function() {
+    $("tr.data").click(function() {
         var tableData = $(this).children("td").map(function() {
             return $(this).text();
         }).get();
