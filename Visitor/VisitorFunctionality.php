@@ -20,6 +20,7 @@
 <html>
    <head>
       <title>Visitor Functionality</title>
+      <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>
          body {
