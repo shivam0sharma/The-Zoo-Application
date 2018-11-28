@@ -15,7 +15,20 @@
        mysqli_close($ntwk);
       }
 ?>
-
+   <?php
+      if(isset($_POST['submit'])) {
+         date_default_timezone_set("America/New_York");
+         $currentTime = date("Y-m-d H:i:s");
+         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+         $password ="Efhjn754"; /* the password for phpmyadmin */
+         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+         $ntwk = mysqli_connect($hostname, $username, $password, $database);
+         $user = $_SESSION['username'];
+         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Pacific','$currentTime')";
+         $result = mysqli_query($ntwk,$query2);
+   }
+   ?>
 <!DOCTYPE html>
 <html>
    <head>
@@ -96,20 +109,9 @@
             </h4>
                
                <form method="post"><input type="submit" name="submit" value="Log Visit"/>
-   <?php
-      if(isset($_POST['submit'])) {
-         date_default_timezone_set("America/New_York");
-         $currentTime = date("Y-m-d H:i:s");
-         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
-         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
-         $password ="Efhjn754"; /* the password for phpmyadmin */
-         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
-         $ntwk = mysqli_connect($hostname, $username, $password, $database);
-         $user = $_SESSION['username'];
-         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Pacific','$currentTime')";
-         $result = mysqli_query($ntwk,$query2);
-   }
-   ?>
+               <div class="col-sm-10 col-sm-offset-2">
+                    <?php echo $insert_result; ?>
+               </div>
    </form>
                <div class="row">
                   <table class="table table-striped">

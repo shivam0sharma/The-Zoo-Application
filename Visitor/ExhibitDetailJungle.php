@@ -16,6 +16,30 @@
       }
 ?>
 
+   <?php
+      if(isset($_POST['submit'])) {
+         date_default_timezone_set("America/New_York");
+         $currentTime = date("Y-m-d H:i:s");
+         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+         $password ="Efhjn754"; /* the password for phpmyadmin */
+         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+         $ntwk = mysqli_connect($hostname, $username, $password, $database);
+         $user = $_SESSION['username'];
+         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Jungle','$currentTime')";
+         $result = mysqli_query($ntwk,$query2);
+         if($result) {
+            $insert_result = '<div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Log Recorded!</div>';
+         } else {
+            $insert_result = '<div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            Log Not Recorded!</div>';
+         }
+   }
+   ?>
+
 <!DOCTYPE html>
 <html>
    <head>
@@ -100,20 +124,9 @@
             </h4>
                
                <form method="post"><input type="submit" name="submit" value="Log Visit"/>
-   <?php
-      if(isset($_POST['submit'])) {
-         date_default_timezone_set("America/New_York");
-         $currentTime = date("Y-m-d H:i:s");
-         $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
-         $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
-         $password ="Efhjn754"; /* the password for phpmyadmin */
-         $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
-         $ntwk = mysqli_connect($hostname, $username, $password, $database);
-         $user = $_SESSION['username'];
-         $query2 = "INSERT INTO ExhibitVisit (visitor,exhibit,visitTime) VALUES ('$user','Jungle','$currentTime')";
-         $result = mysqli_query($ntwk,$query2);
-   }
-   ?>
+               <div class="col-sm-10 col-sm-offset-2">
+                    <?php echo $insert_result; ?>
+               </div>
    </form>
                <div class="row">
                   <table class="table table-striped">
@@ -140,8 +153,6 @@
         var tableData = $(this).children("td").map(function() {
             return $(this).text();
         }).get();
-
-        console.log(tableData);
 
         var location = "./AnimalDetail.php?";
         location = location + "name=" + tableData[0];
