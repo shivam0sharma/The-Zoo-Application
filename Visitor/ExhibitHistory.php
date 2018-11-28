@@ -87,9 +87,16 @@
       <div class="row">
          <form action="ExhibitHistory.php" method="post">
             <div class="container2">
-               <strong>Exhibit: &nbsp;</strong><input type="text" name="exhibitName" placeholder="Name">
+            <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name">
                <br>
                <br>
+               <datalist id="Exhibits">
+                  <option value="Birds">
+                  <option value="Jungle">
+                  <option value="Mountainous">
+                  <option value="Pacific">
+                  <option value="Sahara">
+               </datalist>
                <strong>Visited Date: &nbsp;</strong><input type="date" name="visitDate">
                <br>
                <br>
