@@ -14,7 +14,7 @@
 
        $user = $_SESSION['username'];
        $query = "SELECT a.exhibit, a.visitTime, b.visits FROM ExhibitVisit a
-       join (SELECT exhibit, COUNT(*) visits FROM ExhibitVisit where visitor = '$user' and exhibit like '%".$nameToSearch."%' and visitTime like '%".$visitDateToSearch."%') b 
+       join (SELECT exhibit, COUNT(distinct visitTime) visits FROM ExhibitVisit where visitor = '$user' and exhibit like '%".$nameToSearch."%' and visitTime like '%".$visitDateToSearch."%' group by exhibit) b 
        on a.exhibit = b.exhibit where a.visitor = '$user' and a.exhibit like '%".$nameToSearch."%' and a.visitTime like '%".$visitDateToSearch."%'";
        $search_result = filterTable($query);
 }

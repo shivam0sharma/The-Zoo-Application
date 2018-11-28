@@ -72,6 +72,29 @@
                 <a href="ExhibitHistory.php"> <button type="button"> Exhibit History Page</button></a>
                <br>
                <br>
+            <?php
+            
+            $query3 = "SELECT COUNT(name) AS Num_of_Animals FROM `Animal` WHERE exhibit='Jungle'";
+            $query4 = "SELECT * FROM Exhibit WHERE name = 'Jungle'";
+            $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
+            $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
+            $password ="Efhjn754"; /* the password for phpmyadmin */
+            $database = "cs4400_group53"; /* the name of the database that you wish to fetch data from */
+            $ntwk = mysqli_connect($hostname, $username, $password, $database);
+            $filterQuery3 = mysqli_query($ntwk, $query3);
+            $filterQuery4 = mysqli_query($ntwk, $query4);?>
+
+            <h4>Exhibit Name: Jungle <br><?php while($row = $filterQuery4-> fetch_assoc()) {
+               echo "Size: ".$row["size"]." <br>";
+               echo "Water Feature (1 is True, 0 is False): ".$row["waterFeature"]." <br>";
+               }
+            ?>
+            <?php while($row = $filterQuery3-> fetch_assoc()) {
+               echo "Number of Animals: ".$row["Num_of_Animals"]." <br>";
+               }
+            ?>
+            </h4>
+               
                <form method="post"><input type="submit" name="submit" value="Log Visit"/>
    <?php
       if(isset($_POST['submit'])) {
