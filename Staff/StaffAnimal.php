@@ -193,7 +193,7 @@ $("document").ready(function() {
 
         console.log(tableData);
 
-        var location = "http://localhost/Staff/AnimalCare.php?";
+        var location = "./AnimalCare.php?";
         location = location + "name=" + tableData[0];
         location = location + "&species=" + tableData[1];
         location = location.replace(/ /g, "_");

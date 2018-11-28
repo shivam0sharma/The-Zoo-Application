@@ -33,6 +33,10 @@
          body {
          background-color: rgb(246,242,241);
          }
+         
+         tr:hover {
+         cursor: pointer;
+         }  
          .container {
          margin: 0 auto;
          width: 45%;
@@ -121,14 +125,8 @@
                      </thead>
                      <!-- populate table from mysql database -->
                      <?php while($row = mysqli_fetch_array($search_result)):?>
-                     <tr>
-                        <td class="success"><?php
-                         foreach($row as $column) {
-                            if ($column == $row['name']) {
-                               echo "<a href='AnimalDetail.php?'</a>";
-                            }
-                         }
-                        echo $row['name'];?></a></td>
+                     <tr class="data">
+                        <td class="success"><?php echo $row['name'];?></a></td>
                         <td class="danger"><?php echo $row['species'];?></td>
                      </tr>
                      <?php endwhile;?>
@@ -136,5 +134,23 @@
                </div>
             </div>
       </div>
+<script>
+   $("document").ready(function() {
+    $("tr.data").click(function() {
+        var tableData = $(this).children("td").map(function() {
+            return $(this).text();
+        }).get();
+
+        console.log(tableData);
+
+        var location = "./AnimalDetail.php?";
+        location = location + "name=" + tableData[0];
+        location = location + "&species=" + tableData[1];
+        location = location.replace(/ /g, "_");
+
+        window.location = location;
+    });
+   });
+</script>
    </body>
 </html>
