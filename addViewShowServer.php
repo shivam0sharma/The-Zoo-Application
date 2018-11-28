@@ -41,9 +41,10 @@
         }
     }
 
-    if (isset($_GET['del'])) {
-        $name = $_GET['del'];
-        mysqli_query($db, "DELETE FROM ShowTable WHERE name='$name'");
+    if (isset($_GET['del_name'])) {
+        $name = $_GET['del_name'];
+        $showTime = $_GET['del_time'];
+        mysqli_query($db, "DELETE FROM ShowTable WHERE name='$name' AND showTime='$showTime'");
         $_SESSION['message'] = "Show deleted!";
         header('location: addViewShow.php');
     }

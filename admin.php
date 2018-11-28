@@ -22,6 +22,7 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="shortcut icon" type="image/png" href="./images/zoo_icon.png">
 </head>
 <body>
     <div class="header">
