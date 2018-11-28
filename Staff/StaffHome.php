@@ -89,13 +89,20 @@ body {
   margin:auto;
 }
 
+.GeneratedMarquee {
+  font-family: 'Comic Sans MS';
+  font-size: 1em;
+  line-height:1.3em;
+  padding:1em;
+}
+
 </style>
 </head>
 
 <body>
 
 <br>
-<h1 style="text-align:center;">Welcome Staff!</h1>
+<h1 style="text-align:center;"><marquee class="GeneratedMarquee" direction="left" scrollamount="5" behavior="alternate">Welcome Staff!</marquee></h1>
 
 <div class="center">
 <p style="text-align:center;"><img src="../images/zoo.jpg" alt="Zoo" width="80%;"></p>
