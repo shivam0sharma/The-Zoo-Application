@@ -12,7 +12,8 @@ if(isset($_POST['search']))
     }
     $typeToSearch = $_POST['type'];
     $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
-        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'    AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
     $search_result = filterTable($query);
     
 }
