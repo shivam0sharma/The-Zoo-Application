@@ -11,7 +11,17 @@
     $detailsQuery = "SELECT * FROM Animal WHERE (name like '%".$name."%' AND species LIKE '%".$species."%')";
     $details = mysqli_query($ntwk, $detailsQuery);
     $details = mysqli_fetch_array($details);
-    $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')";
+    $sort;
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    }
+    if (empty($sort)) {
+        $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')";
+    } else {
+        $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')
+        ORDER BY TreatmentNote.$sort";
+    }   
+    
     $result = mysqli_query($ntwk, $query);
 
     if(isset($_POST['log'])) {
@@ -28,6 +38,7 @@
                 $insert_result = '<div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 Log Recorded!</div>';
+                $result = mysqli_query($ntwk, $query);
             } else {
                 $insert_result = '<div class="alert alert-danger">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -134,9 +145,9 @@ th:hover{
     <div>
         <table class="table table-bordered" id="treatmentTable">
                 <tr>
-                    <th onclick="sortTable(0)">Staff Member</th>
-                    <th onclick="sortTable(1)">Note</th>
-                    <th onclick="sortTable(2)">Time</th>
+                    <th onclick="sort('staff')">Staff Member</th>
+                    <th onclick="sort('message')">Note</th>
+                    <th onclick="sort('noteTime')">Time</th>
                 </tr>
                 <?php while($row = mysqli_fetch_array($result)) {?>
                 <tr>
@@ -165,6 +176,20 @@ speciesIn = speciesIn.replace(/_/g, " ");
 $("#name").text("Name: " + nameIn);
 $("#species").text("Species: " + speciesIn);
 $("#logForm").action = window.location.href;
+
+function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var nameIn = queries[0].substring(index + 1);
+    nameIn = nameIn.replace(/_/g, " ");
+    index = queries[1].indexOf("=");
+    var speciesIn = queries[1].substring(index + 1);
+
+    window.location = "./AnimalCare.php?name=" + nameIn + "&species=" + speciesIn + "&sort=" + type;
+}
+
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("treatmentTable");

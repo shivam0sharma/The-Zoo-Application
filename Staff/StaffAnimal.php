@@ -1,4 +1,11 @@
 <?php
+
+$sort;
+
+if (isset($_GET['sort'])) {
+    $sort = $_GET['sort'];
+}
+
 if(isset($_POST['search']))
 {
     $animalToSearch = $_POST['name'];
@@ -6,20 +13,39 @@ if(isset($_POST['search']))
     $exhibitToSearch = $_POST['exhibit'];
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
+    
     if ($ageMaxToSearch < $ageMinToSearch) {
-        $ageMinToSearch = 0;
-        $ageMaxToSearch = 100;
+        $ageMinToSearch = 1;
+        $ageMaxToSearch = 8;
     }
     $typeToSearch = $_POST['type'];
-    $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+    if (empty($sort)){
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
         AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+    } else {
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
+    }
+    
+    $type = $typeToSearch;
+    $exhibit = $exhibitToSearch;
+    $min = $ageMinToSearch;
+    $max = $ageMaxToSearch;
     $search_result = filterTable($query);
     
 }
  else {
-    $query = "SELECT * FROM `Animal`";
+
+    if (empty($sort)) {
+        $query = "SELECT * FROM `Animal`";
+    } else {
+        
+        $query = "SELECT * FROM `Animal` ORDER BY Animal.$sort ASC";
+    }
     $search_result = filterTable($query);
+    
 }
 // function to connect and execute the query
 function filterTable($query)
@@ -108,35 +134,36 @@ table {
     <div class="container">
             <form class="form-inline" method="post" action="StaffAnimal.php">
                     <div class="form-group row">
-                        <label for="name">Name: </label>
-                        <input type="text" class="form-control" name="name">
+                        <label for="name" >Name: </label>
+                        <input type="text" class="form-control" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
                         <label for="species">Species: </label>
-                        <input type="text" class="form-control" name="species">
+                        <input type="text" class="form-control" name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
                         <label for="type">Type: </label>
-                        <select class="form-control" name="type">
-                            <option></option>
+                        <input list="type" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
+                        <datalist id="type">
                             <option>Mammal</option>
                             <option>Bird</option>
                             <option>Amphibian</option>
                             <option>Reptile</option>
                             <option>Fish</option>
                             <option>invertebrate</option>
-                        </select>
+                        </datalist>
                     </div>
                     <br>
                     <div class="form-group row"  style="padding-top:10px">
                         <label for="exhibit" >Exhibit: </label>
-                        <select class ="form-control" name="exhibit">
-                            <option></option>
+                        <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+                        <datalist id="exhibit">
                             <option>Birds</option>
                             <option>Jungle</option>
                             <option>Mountainous</option>
                             <option>Pacific</option>
                             <option>Sahara</option>
-                        </select>
+                        </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <select class="form-control" name="ageMin" id="age-min"style="padding-left:5px">
-                            <option selected="selected">1</option>
+                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : '';?>">
+                        <datalist id="age-min">
+                            <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
@@ -144,18 +171,20 @@ table {
                             <option>6</option>
                             <option>7</option>
                             <option>8</option>
+                        </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <select class="form-control" name="ageMax" id="age-max">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option selected="selected">8</option>
-                        </select>
+                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : '';?>">
+                        <datalist id="age-max">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </datalist>
                         <input class="btn2" type="submit" name="search" value="Search">
                     </div>
                     
@@ -165,11 +194,11 @@ table {
     <div>
     <table class="table table-bordered" id="animalTable">
                 <thead>
-                    <th onclick="sortTable(0)">Name</th>
-                    <th onclick="sortTable(1)">Species</th>
-                    <th onclick="sortTable(2)">Exhibit</th>
-                    <th onclick="sortTable(3)">Age</th>
-                    <th onclick="sortTable(4)">Type</th>
+                    <th onclick="sort('name')">Name</th>
+                    <th onclick="sort('species')">Species</th>
+                    <th onclick="sort('exhibit')">Exhibit</th>
+                    <th onclick="sort('age')">Age (in months)</th>
+                    <th onclick="sort('animalType')">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
                 <tr class="data">
@@ -200,59 +229,8 @@ $("document").ready(function() {
     });
 });
 
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("animalTable");
-  switching = true;
-  // Set the sorting direction to ascending:
-  dir = "asc"; 
-  /* Make a loop that will continue until
-  no switching has been done: */
-  while (switching) {
-    // Start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /* Loop through all table rows (except the
-    first, which contains table headers): */
-    for (i = 1; i < (rows.length - 1); i++) {
-      // Start by saying there should be no switching:
-      shouldSwitch = false;
-      /* Get the two elements you want to compare,
-      one from current row and one from the next: */
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /* Check if the two rows should switch place,
-      based on the direction, asc or desc: */
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /* If a switch has been marked, make the switch
-      and mark that a switch has been done: */
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      // Each time a switch is done, increase this count by 1:
-      switchcount ++; 
-    } else {
-      /* If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again. */
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
+function sort(type) {
+    window.location = './StaffAnimal.php?sort=' + type;
 }
 </script>
 

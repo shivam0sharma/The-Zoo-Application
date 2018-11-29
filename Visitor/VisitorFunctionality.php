@@ -123,11 +123,11 @@
       <div class="center">
          <p style="text-align:center;"><img src="zoo.jpg" alt="Zoo" width="80%;"></p>
          <h1 style="text-align:center;">
-            <button class="btn searchExhibit">Search Exhibit</button>
+            <a href="Search_Exhibits.php"><button class="btn searchExhibit">Search Exhibit</button></a>
             <a href="ExhibitHistory.php"><button class="btn viewExhibitHistory">View Exhibit History</button></a>
-            <button class="btn searchShows">Search Shows</button>
+            <a href="Search_Shows.php"><button class="btn searchShows">Search Shows</button></a>
             <a href="ShowHistory.php"><button class="btn viewShowHistory">View Show History</button></a>
-            <button class="btn searchForAnimals">Search for Animals</button>
+            <a href="Search_Animals.php"><button class="btn searchForAnimals">Search for Animals</button></a>
             <a href="VisitorFunctionality.php?logout='1'"><button class="btn logOut">Log Out</button></a>
          </h1>
       </div>

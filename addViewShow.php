@@ -51,34 +51,41 @@ th.head {
         <label style="font-weight:bold; text-align: center; display: block; line-height:150%;">Add/View Show</label>
         <div class="input-group">
             <label>Name</label>
-            <input type="text" placeholder="Name of show" name="name">
+            <input type="text" placeholder="Name of show" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         </div>
 
         <div class="input-group">
             <label>Exhibit Location</label>
-            <select style="height: 40px; width: 200px;" name="location">
-                <?php
+            <input list="location" name="location" value="<?php echo isset($_POST['location']) ? $_POST['location'] : '';?>">
+            <datalist id="location">
+            <?php
                 $locations = mysqli_query($db, "SELECT * FROM Exhibit");
                 while ($location = mysqli_fetch_array($locations)) { ?>
-                    <option value="<?php echo $location['name']; ?>"><?php echo $location['name']; ?></option>
+                    <option value="<?php echo $location['name']; ?>">
                 <?php } ?>
-            </select>
+            </datalist>
         </div>
 
         <div class="input-group">
             <label>Staff</label>
-            <select style="height: 40px; width: 200px;" name="staff">
+            <input list="staff" name="staff" value="<?php echo isset($_POST['staff']) ? $_POST['staff'] : '';?>">
+            <datalist id="staff">
                 <?php
                 $staffs = mysqli_query($db, "SELECT * FROM Staff");
                 while ($staff = mysqli_fetch_array($staffs)) { ?>
                     <option value="<?php echo $staff['username']; ?>"><?php echo $staff['username']; ?></option>
                 <?php } ?>
-            </select>
+            </datalist>
         </div>
 
         <div class="input-group">
-            <label>Show Time</label>
-            <input type="datetime-local" name="showTime">
+            <label>Search Date</label>
+            <input type="date" name="showTime" value="<?php echo isset($_POST['showTime']) ? $_POST['showTime'] : '';?>">
+        </div>
+
+        <div class="input-group">
+            <label>Show Date and Time</label>
+            <input type="datedatetime-local" name="addShowTime">
         </div>
 
         <div class="input-group">
@@ -93,8 +100,8 @@ th.head {
             <tr>
                 <th class="head" onclick="sortTable(0)">Name</th>
                 <th class="head" onclick="sortTable(1)">Exhibit Location</th>
-                <th class="head" onclick="sortTable(2)">Date</th>
-                <th colspan="1"">Action</th>
+                <th>Date</th>
+                <th colspan="1">Action</th>
             </tr>
         </thead>
 

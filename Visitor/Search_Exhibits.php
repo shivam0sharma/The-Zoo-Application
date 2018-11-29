@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body { background-color: rgb(230, 223, 207) }
+
+    </style>
+    
     <link rel="stylesheet" type="text/css" href="Search_Exhibits.css">
     <title>Search for Exhibits</title>
 </head>
@@ -31,7 +36,7 @@
         <input type="number" min="0" step="10" name="min_exhibit_num" class="exhibit_num">
         &ensp;Max
         <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num">
-        &emsp;&emsp;&emsp;&emsp;&emsp;Water Feature:
+        &emsp;&emsp;&emsp;Water Feature:
         <select type="text" name="wfeat">
             <option></option>
             <option value="Yes">Yes</option>
@@ -39,6 +44,7 @@
         <br>
         <br>
         <input type="submit" name="search" value="Search">
+        <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
 
     </form>
 

@@ -52,43 +52,48 @@ th.head {
         <label style="font-weight:bold; text-align: center; display: block; line-height:150%;">Add/View Animal</label>
         <div class="input-group">
             <label>Name</label>
-            <input type="text" placeholder="Name of animal" name="name">
-        </div>
-
-        <div class="input-group">
-            <label>Exhibit</label>
-            <select style="height: 40px; width: 200px;" name="exhibit">
-                <?php
-                $exhibits = mysqli_query($db, "SELECT * FROM Exhibit");
-                while ($exhibit = mysqli_fetch_array($exhibits)) { ?>
-                    <option value="<?php echo $exhibit['name']; ?>"><?php echo $exhibit['name']; ?></option>
-                <?php } ?>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Animal Type</label>
-            <select style="height: 40px; width: 200px;" name="animalType">
-                <option value="Mammal">Mammal</option>
-                <option value="Bird">Bird</option>
-                <option value="Amphibian">Amphibian</option>
-                <option value="Reptile">Reptile</option>
-                <option value="Fish">Fish</option>
-                <option value="Invertebrate">Invertebrate</option>
-            </select>
+            <input type="text" placeholder="Name of animal" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         </div>
 
         <div class="input-group">
             <label>Species</label>
-            <input type="text" placeholder="Species of animal" name="species">
+            <input type="text" placeholder="Species of animal" name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
         </div>
+
+        <div class="input-group">
+            <label>Exhibit</label>
+            
+            <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+            <datalist id="exhibit">
+                <?php
+                $exhibits = mysqli_query($db, "SELECT * FROM Exhibit");
+                while ($exhibit = mysqli_fetch_array($exhibits)) { ?>
+                    <option value="<?php echo $exhibit['name']; ?>"></option>
+                <?php }?>
+            </datalist>
+        </div>
+
+        <div class="input-group">
+            <label>Animal Type</label>
+            <input list="animalType" name="animalType" value="<?php echo isset($_POST['animalType']) ? $_POST['animalType'] : '';?>">
+            <datalist id="animalType">
+                <option value="Mammal"></option>
+                <option value="Bird"></option>
+                <option value="Amphibian"></option>
+                <option value="Reptile"></option>
+                <option value="Fish"></option>
+                <option value="Invertebrate"></option>
+            </datalist>
+        </div>
+
+        
 
         <div class="input-group">
             <label>Age</label>
             <input type="text" placeholder="Age" name="age">
             <label>Age Range</label>
-            <input type="text" placeholder="Min" name="age_min">
-            <input type="text" placeholder="Max" name="age_max">
+            <input type="text" placeholder="Min" name="age_min" value="<?php echo isset($_POST['age_min']) ? $_POST['age_min'] : '';?>">
+            <input type="text" placeholder="Max" name="age_max" value="<?php echo isset($_POST['age_max']) ? $_POST['age_max'] : '';?>">
         </div>
 
         <div class="input-group">
