@@ -13,6 +13,7 @@
     $age_max = "";
     $exhibit = "";
     $errors = array();
+    $sort;
 
     if (isset($_POST['add'])) {
         $name = $_POST['name'];
@@ -53,6 +54,9 @@
         $_SESSION['message'] = "Animal deleted!";
         header('location: addViewAnimal.php');
     }
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    }
 
     if(isset($_POST['search'])) {
         $name = $_POST['name'];
@@ -74,13 +78,22 @@
             // search in all table columns
             // using concat mysql function
             $query = "SELECT * FROM Animal WHERE (age>='$age_min') AND (age<='$age_max') AND (exhibit LIKE '%$exhibit%') AND (animalType LIKE '%$animalType%') AND (species LIKE '%$species%') AND (name LIKE '%$name%')";
+            if (!empty($sort)) {
+                $query = $query . ' ORDER BY Animal.' . $sort;
+            }
             $search_result = mysqli_query($db, $query);
         } else {
             $query = "SELECT * FROM Animal";
+            if (!empty($sort)) {
+                $query = $query . ' ORDER BY Animal.' . $sort;
+            }
             $search_result = mysqli_query($db, $query);
         }
     } else {
         $query = "SELECT * FROM Animal";
+        if (!empty($sort)) {
+            $query = $query . ' ORDER BY Animal.' . $sort;
+        }
         $search_result = mysqli_query($db, $query);
     }
 ?>
