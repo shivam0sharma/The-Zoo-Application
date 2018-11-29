@@ -7,6 +7,11 @@
     // initialize variables
     $username = "";
     $email = "";
+    $sort;
+
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    }
 
     if (isset($_GET['del'])) {
         $username = $_GET['del'];
@@ -20,9 +25,15 @@
         // search in all table columns
         // using concat mysql function
         $query = "SELECT * FROM User WHERE (userType='Visitor') AND (CONCAT(username, email) LIKE '%$valueToSearch%')";
+        if(!empty($sort)) {
+            $query = $query . ' ORDER BY User.' . $sort;
+        }
         $search_result = mysqli_query($db, $query);
     } else {
         $query = "SELECT * FROM User WHERE userType='Visitor'";
+        if(!empty($sort)) {
+            $query = $query . ' ORDER BY User.' . $sort;
+        }
         $search_result = mysqli_query($db, $query);
     }
 ?>

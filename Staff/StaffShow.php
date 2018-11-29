@@ -24,7 +24,7 @@ if (isset($_GET['logout'])) {
     $sort;
     if (isset($_GET['sort'])) {
         $sort = $_GET['sort'];
-    )
+    }
     if (empty($sort)) {
         $query = "SELECT * FROM ShowTable WHERE host = '$user'";
     } else {
