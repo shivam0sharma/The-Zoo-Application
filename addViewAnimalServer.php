@@ -33,6 +33,16 @@
             mysqli_query($db, "INSERT INTO Animal (name, species, animalType, age, exhibit) VALUES ('$name', '$species', '$animalType', '$age', '$exhibit')");
             $_SESSION['message'] = "Animal added";
             header('location: addViewAnimal.php');
+            $_POST['name'] = null;
+            $_POST['species'] = null;
+            $_POST['animalType'] = null;
+            $_POST['age'] = null;
+            $_POST['exhibit'] = null;
+            $_POST['age_min']= null;
+            $_POST['age_max']= null;
+            $query = "SELECT * FROM Animal";
+            $search_result = mysqli_query($db, $query);
+            
         }
     }
 

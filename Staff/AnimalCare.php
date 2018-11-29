@@ -28,6 +28,7 @@
                 $insert_result = '<div class="alert alert-success">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 Log Recorded!</div>';
+                $result = mysqli_query($ntwk, $query);
             } else {
                 $insert_result = '<div class="alert alert-danger">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

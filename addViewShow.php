@@ -79,8 +79,13 @@ th.head {
         </div>
 
         <div class="input-group">
-            <label>Show Time</label>
+            <label>Search Date</label>
             <input type="date" name="showTime" value="<?php echo isset($_POST['showTime']) ? $_POST['showTime'] : '';?>">
+        </div>
+
+        <div class="input-group">
+            <label>Show Date and Time</label>
+            <input type="datedatetime-local" name="addShowTime">
         </div>
 
         <div class="input-group">

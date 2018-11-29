@@ -9,6 +9,7 @@
     $location = "";
     $staff = "";
     $showTime = "";
+    $addShowTime
 
     $errors = array();
 
@@ -16,17 +17,17 @@
         $name = $_POST['name'];
         $location = $_POST['location'];
         $staff = $_POST['staff'];
-        $showTime = $_POST['showTime'];
+        $addShowTime = $_POST['addShowTime'];
 
         // form validation: ensure that the form is correctly filled
         if (empty($name)) { array_push($errors, "Name is required"); }
         if (empty($location)) { array_push($errors, "Exhibit Location is required"); }
         if (empty($staff)) { array_push($errors, "Staff is required"); }
-        if (empty($showTime)) { array_push($errors, "Show Time is required"); }
+        if (empty($addShowTime)) { array_push($errors, "Show Data and Time is required"); }
 
         // check case: A staff member cannot host multiple shows at the same time.
         // check case: A staff member cannot host multiple shows at the same time.
-        $staff_hosting_time_check_query = "SELECT * FROM ShowTable WHERE host='$staff' AND showTime='$showTime' LIMIT 1";
+        $staff_hosting_time_check_query = "SELECT * FROM ShowTable WHERE host='$staff' AND showTime='$addShowTime' LIMIT 1";
         $staff_hosting_time_check_query_result = mysqli_query($db, $staff_hosting_time_check_query);
         $staff_exists = mysqli_fetch_assoc($staff_hosting_time_check_query_result);
         if ($staff_exists) { // if staff already have a show at that time
@@ -35,7 +36,7 @@
 
         // add show if there are no errors in the form
         if (count($errors) == 0) {
-            mysqli_query($db, "INSERT INTO ShowTable (name, showTime, host, location) VALUES ('$name', '$showTime', '$staff', '$location')");
+            mysqli_query($db, "INSERT INTO ShowTable (name, showTime, host, location) VALUES ('$name', '$addShowTime', '$staff', '$location')");
             $_SESSION['message'] = "Show added";
             header('location: addViewShow.php');
         }
