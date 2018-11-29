@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body { background-color: rgb(230, 223, 207) }
+
+    </style>
+    
     <link rel="stylesheet" type="text/css" href="Search_Shows.css">
     <title>Search for Shows</title>
 </head>
@@ -26,6 +31,7 @@
         <br>
         <br>
         <input type="submit" name="search" value="Search">
+        <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
 
     </form>
 
