@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-        body { background-color: rgb(230, 223, 207) }
+         body {
+         background-color: rgb(230, 223, 207)
+         }
 
+        .container {
+         margin: 0 auto;
+         width: 45%;
+         border: 3px solid #73AD21;
+         padding: auto;
+         margin-top: auto;
+         }
+
+        .row2 {
+         position: static;
+         margin-top: -20%;
+         margin-left: 130%;
+         margin-right: 0%;
+         }
     </style>
-    
-    <link rel="stylesheet" type="text/css" href="Search_Shows.css">
+    <div align="center" class="container">
     <title>Search for Shows</title>
+
 </head>
 <body>
     <header>
@@ -32,7 +56,8 @@
         <br>
         <input type="submit" name="search" value="Search">
         <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
-
+        <br>
+        <br>
     </form>
 
     <?php
@@ -54,8 +79,7 @@
             $result = mysqli_query($conn, $sql);
         }
     ?>
-
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -66,22 +90,17 @@
 
         <?php while ($row = mysqli_fetch_array($result)) { ?>
             <tr>
-                <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['location']; ?></td>
-                <td><?php echo $row['showTime']; ?></td>
+                <td class="success"><?php echo $row['name']; ?></td>
+                <td class="danger"><?php echo $row['location']; ?></td>
+                <td class="info"><?php echo $row['showTime']; ?></td>
             </tr>
         <?php } ?>
-
     </table>
 
-
     <br>
     <br>
-    <div id="log_button">
-        <input type="button" name="log" value="Log Visit" id="log_button">
-    </div>
 </body>
 
 
-
+</div>
 </html>

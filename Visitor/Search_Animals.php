@@ -1,12 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body { background-color: rgb(230, 223, 207) }
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <!-- jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Latest compiled JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
+      <style>
+         body {
+         background-color: rgb(230, 223, 207)
+         }
 
+        .container {
+         margin: 0 auto;
+         width: 45%;
+         border: 3px solid #73AD21;
+         padding: auto;
+         margin-top: auto;
+         }
+
+        .row2 {
+         position: static;
+         margin-top: -20%;
+         margin-left: 130%;
+         margin-right: 0%;
+         }
     </style>
-
-    <link rel="stylesheet" type="text/css" href="Search_Animals.css">
+        <div align="center" class="container">
     <title>Search for Animals</title>
 </head>
 <body>
@@ -79,7 +103,7 @@
     <br>
     <br>
     <div>
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -92,11 +116,11 @@
 
             <?php while ($row = mysqli_fetch_array($result)) { ?>
                 <tr>
-                    <td><?php echo $row['name']; ?></td>
-                    <td><?php echo $row['species']; ?></td>
-                    <td><?php echo $row['exhibit']; ?></td>
-                    <td><?php echo $row['age']; ?></td>
-                    <td><?php echo $row['animalType']; ?></td>
+                    <td class="success"><?php echo $row['name']; ?></td>
+                    <td class="danger"><?php echo $row['species']; ?></td>
+                    <td class="info"><?php echo $row['exhibit']; ?></td>
+                    <td class="success"><?php echo $row['age']; ?></td>
+                    <td class="danger"><?php echo $row['animalType']; ?></td>
                 </tr>
             <?php } ?>
 
@@ -106,5 +130,5 @@
 </body>
 
 
-
+</div>
 </html>
