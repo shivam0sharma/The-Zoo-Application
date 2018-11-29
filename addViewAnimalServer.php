@@ -49,17 +49,15 @@
         $species = $_POST['species'];
         $animalType = $_POST['animalType'];
         $age_min = $_POST['age_min'];
+        if(empty($age_min)) {
+            $age_min = 1;
+        }
         $age_max = $_POST['age_max'];
+        if(empty($age_max)) {
+            $age_max = 1000;
+        }
         $exhibit = $_POST['exhibit'];
         // $valueToSearch = $_POST['valueToSearch'];
-
-        // form validation: ensure that the form is correctly filled
-        if (empty($name)) { array_push($errors, "Name is required"); }
-        if (empty($species)) { array_push($errors, "Species is required"); }
-        if (empty($animalType)) { array_push($errors, "Animal Type is required"); }
-        if (empty($age_min)) { array_push($errors, "Min Age is required"); }
-        if (empty($age_max)) { array_push($errors, "Max Age is required"); }
-        if (empty($exhibit)) { array_push($errors, "Exhibit is required"); }
 
         // search animal if there are no errors in the form
         if (count($errors) == 0) {

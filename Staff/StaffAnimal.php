@@ -7,13 +7,17 @@ if(isset($_POST['search']))
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
     if ($ageMaxToSearch < $ageMinToSearch) {
-        $ageMinToSearch = 0;
-        $ageMaxToSearch = 100;
+        $ageMinToSearch = 1;
+        $ageMaxToSearch = 8;
     }
     $typeToSearch = $_POST['type'];
     $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
         AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+    $type = $typeToSearch;
+    $exhibit = $exhibitToSearch;
+    $min = $ageMinToSearch;
+    $max = $ageMaxToSearch;
     $search_result = filterTable($query);
     
 }
@@ -108,35 +112,36 @@ table {
     <div class="container">
             <form class="form-inline" method="post" action="StaffAnimal.php">
                     <div class="form-group row">
-                        <label for="name">Name: </label>
-                        <input type="text" class="form-control" name="name">
+                        <label for="name" >Name: </label>
+                        <input type="text" class="form-control" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
                         <label for="species">Species: </label>
-                        <input type="text" class="form-control" name="species">
+                        <input type="text" class="form-control" name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
                         <label for="type">Type: </label>
-                        <select class="form-control" name="type">
-                            <option></option>
+                        <input list="type" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
+                        <datalist id="type">
                             <option>Mammal</option>
                             <option>Bird</option>
                             <option>Amphibian</option>
                             <option>Reptile</option>
                             <option>Fish</option>
                             <option>invertebrate</option>
-                        </select>
+                        </datalist>
                     </div>
                     <br>
                     <div class="form-group row"  style="padding-top:10px">
                         <label for="exhibit" >Exhibit: </label>
-                        <select class ="form-control" name="exhibit">
-                            <option></option>
+                        <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+                        <datalist id="exhibit">
                             <option>Birds</option>
                             <option>Jungle</option>
                             <option>Mountainous</option>
                             <option>Pacific</option>
                             <option>Sahara</option>
-                        </select>
+                        </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <select class="form-control" name="ageMin" id="age-min"style="padding-left:5px">
-                            <option selected="selected">1</option>
+                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : '';?>">
+                        <datalist id="age-min">
+                            <option>1</option>
                             <option>2</option>
                             <option>3</option>
                             <option>4</option>
@@ -144,18 +149,20 @@ table {
                             <option>6</option>
                             <option>7</option>
                             <option>8</option>
+                        </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <select class="form-control" name="ageMax" id="age-max">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option selected="selected">8</option>
-                        </select>
+                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : '';?>">
+                        <datalist id="age-max">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </datalist>
                         <input class="btn2" type="submit" name="search" value="Search">
                     </div>
                     

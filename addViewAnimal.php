@@ -58,6 +58,7 @@ th.head {
         <div class="input-group">
             <label>Exhibit</label>
             <select style="height: 40px; width: 200px;" name="exhibit">
+                <option></option>
                 <?php
                 $exhibits = mysqli_query($db, "SELECT * FROM Exhibit");
                 while ($exhibit = mysqli_fetch_array($exhibits)) { ?>
@@ -69,6 +70,7 @@ th.head {
         <div class="input-group">
             <label>Animal Type</label>
             <select style="height: 40px; width: 200px;" name="animalType">
+                <option></option>
                 <option value="Mammal">Mammal</option>
                 <option value="Bird">Bird</option>
                 <option value="Amphibian">Amphibian</option>
