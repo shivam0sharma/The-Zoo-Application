@@ -32,6 +32,7 @@
     </style>
         <div align="center" class="container">
     <title>Search for Animals</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -83,6 +84,18 @@
             $species = $_POST['species'];
             $animal_type = $_POST['select_type'];
             $exhibit = $_POST['select_exhibit'];
+            if ($_POST['min_animal_num'] == 0) {
+                $min_age = 0;
+            } else {
+                $min_age = $_POST['min_animal_num'];
+            }
+
+            if ($_POST['max_animal_num'] == 0) {
+                $max_age = PHP_INT_MAX;
+            } else {
+                $max_age = $_POST['max_animal_num'];
+            }            
+            
 
 
             $sql = "SELECT name, species, exhibit, age, animalType
@@ -90,7 +103,9 @@
             WHERE name like '%" . $name . "%'
             AND species like '%" . $species . "%'
             AND animalType like '%" . $animal_type . "%'
-            AND exhibit like '%" . $exhibit . "%'";
+            AND exhibit like '%" . $exhibit . "%'
+            AND age >= " . $min_age . "
+            AND age <= " . $max_age;
             $result = mysqli_query($conn, $sql);
         } else {
 
@@ -115,18 +130,35 @@
             </thead>
 
             <?php while ($row = mysqli_fetch_array($result)) { ?>
-                <tr>
-                    <td class="success"><?php echo $row['name']; ?></td>
-                    <td class="danger"><?php echo $row['species']; ?></td>
-                    <td class="info"><?php echo $row['exhibit']; ?></td>
-                    <td class="success"><?php echo $row['age']; ?></td>
-                    <td class="danger"><?php echo $row['animalType']; ?></td>
+
+                <tr class="data">
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['species']; ?></td>
+                    <td><?php echo $row['exhibit']; ?></td>
+                    <td><?php echo $row['age']; ?></td>
+                    <td><?php echo $row['animalType']; ?></td>
                 </tr>
             <?php } ?>
 
         </table>
     
     </div>
+    <script>
+        $("document").ready(function() {
+        $("tr.data").click(function() {
+            var tableData = $(this).children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            var location = "./AnimalCare.php?";
+            location = location + "name=" + tableData[0];
+            location = location + "&species=" + tableData[1];
+            location = location.replace(/ /g, "_");
+
+            window.location = location;
+        }); 
+    });
+    </script>
 </body>
 
 

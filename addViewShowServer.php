@@ -9,7 +9,8 @@
     $location = "";
     $staff = "";
     $showTime = "";
-    $addShowTime = "";
+    $addShowTime;
+    $sort;
 
     $errors = array();
 
@@ -49,13 +50,14 @@
         $_SESSION['message'] = "Show deleted!";
         header('location: addViewShow.php');
     }
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    }
 
     if(isset($_POST['search'])) {
         $name = $_POST['name'];
         $location = $_POST['location'];
         $showTime = $_POST['showTime'];
-
-        // form validation: ensure that the form is correctly filled
         // search show if there are no errors in the form
         if (count($errors) == 0) {
             // search in all table columns
@@ -65,13 +67,22 @@
             } else {
                 $query = "SELECT * FROM ShowTable WHERE (name LIKE '%$name%') AND (location LIKE '%$location%') AND (showTime like '%$showTime%')";
             }
-            
+            if (!empty($sort)) {
+                $query = $query . ' ORDER BY ShowTable.' . $sort;
+            }
             $search_result = mysqli_query($db, $query);
         } else {
             $query = "SELECT * FROM ShowTable";
+            if (!empty($sort)) {
+                $query = $query . ' ORDER BY ShowTable.' . $sort;
+            }
             $search_result = mysqli_query($db, $query);
         }
     } else {
+        $query = "SELECT * FROM ShowTable";
+        if (!empty($sort)) {
+            $query = $query . ' ORDER BY ShowTable.' . $sort;
+        }
         $query = "SELECT * FROM ShowTable";
         $search_result = mysqli_query($db, $query);
 
