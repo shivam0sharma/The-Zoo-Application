@@ -17,7 +17,7 @@
 
         .container {
          margin: 0 auto;
-         width: 45%;
+         width: 59%;
          border: 3px solid #73AD21;
          padding: auto;
          margin-top: auto;
@@ -44,9 +44,9 @@
 
     <form method="POST" action="Search_Animals.php" id="search_params">
         Name: <input type="text" name="name" class="text">
-        &emsp;&emsp;&emsp;Age: &ensp;Min
+        &emsp;Age: &ensp;Min -
         <input type="number" min="0" name="min_animal_num" class="age_num">
-        &ensp;Max 
+        &ensp;&ensp;&ensp;Max -
         <input type="number" min="0" name="max_animal_num" class="age_num">
         <br>
         <br>
@@ -132,11 +132,11 @@
             <?php while ($row = mysqli_fetch_array($result)) { ?>
 
                 <tr class="data">
-                    <td><?php echo $row['name']; ?></td>
-                    <td><?php echo $row['species']; ?></td>
-                    <td><?php echo $row['exhibit']; ?></td>
-                    <td><?php echo $row['age']; ?></td>
-                    <td><?php echo $row['animalType']; ?></td>
+                    <td class="success"><?php echo $row['name']; ?></td>
+                    <td class="danger"><?php echo $row['species']; ?></td>
+                    <td class="info"><?php echo $row['exhibit']; ?></td>
+                    <td class="success"><?php echo $row['age']; ?></td>
+                    <td class="danger"><?php echo $row['animalType']; ?></td>
                 </tr>
             <?php } ?>
 
