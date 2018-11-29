@@ -5,9 +5,6 @@ $sort;
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 }
-
-if(isset($_POST['search']))
-{
     $animalToSearch = $_POST['name'];
     $speciesToSearch = $_POST['species'];
     $exhibitToSearch = $_POST['exhibit'];
@@ -16,6 +13,14 @@ if(isset($_POST['search']))
     
     if ($ageMaxToSearch < $ageMinToSearch) {
         $ageMinToSearch = 1;
+        $_POST['ageMin'] = 1;
+        $ageMaxToSearch = 8;
+        $_POST['ageMax'] = 8;
+    }
+    if(empty($ageMinToSearch)) {
+        $ageMinToSearch = 1;
+    }
+    if(empty($ageMaxToSearch)) {
         $ageMaxToSearch = 8;
     }
     $typeToSearch = $_POST['type'];
@@ -28,25 +33,7 @@ if(isset($_POST['search']))
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
         AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
     }
-    
-    $type = $typeToSearch;
-    $exhibit = $exhibitToSearch;
-    $min = $ageMinToSearch;
-    $max = $ageMaxToSearch;
     $search_result = filterTable($query);
-    
-}
- else {
-
-    if (empty($sort)) {
-        $query = "SELECT * FROM `Animal`";
-    } else {
-        
-        $query = "SELECT * FROM `Animal` ORDER BY Animal.$sort ASC";
-    }
-    $search_result = filterTable($query);
-    
-}
 // function to connect and execute the query
 function filterTable($query)
 {
@@ -161,7 +148,7 @@ table {
                             <option>Sahara</option>
                         </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : '';?>">
+                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
                         <datalist id="age-min">
                             <option>1</option>
                             <option>2</option>
@@ -174,7 +161,7 @@ table {
                         </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : '';?>">
+                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
                         <datalist id="age-max">
                             <option>1</option>
                             <option>2</option>

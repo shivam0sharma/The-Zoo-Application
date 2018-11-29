@@ -53,7 +53,7 @@ body {
 
 .center {
     margin: auto;
-    width: 75%;
+    width: 45%;
     border: 3px solid #73AD21;
     padding: 10px;
 }
