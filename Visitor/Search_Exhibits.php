@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        body { background-color: rgb(230, 223, 207) }
-
-    </style>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
       <!-- Latest compiled and minified CSS -->
@@ -14,6 +9,27 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <!-- Latest compiled JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style>
+         body {
+         background-color: rgb(230, 223, 207)
+         }
+
+        .container {
+         margin: 0 auto;
+         width: 59%;
+         border: 3px solid #73AD21;
+         padding: auto;
+         margin-top: auto;
+         }
+
+        .row2 {
+         position: static;
+         margin-top: -20%;
+         margin-left: 130%;
+         margin-right: 0%;
+         }
+    </style>
+<div align="center" class="container">
     <title>Search for Exhibits</title>
 </head>
 <body>
@@ -33,26 +49,28 @@
             <option value="pacific">Pacific</option>
             <option value="sahara">Sahara</option>
         </select>
-        &emsp;&emsp;Number of Animals: &ensp;Min
+        &emsp;&emsp;Number of Animals: &ensp;Min - 
         <input type="number" min="0" name="min_animal_num" class="animal_num">
-        &ensp;Max 
+        &ensp;Max -
         <input type="number" min="0" name="max_animal_num" class="animal_num">
         <br>
         <br>
-        Exhibit Size: &ensp;Min
+        Exhibit Size: &ensp;Min -
         <input type="number" min="0" step="10" name="min_exhibit_num" class="exhibit_num">
-        &ensp;Max
+        &ensp;Max -
         <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num">
-        &emsp;&emsp;&emsp;Water Feature:
+        &emsp;Water Feature:
         <select type="text" name="wfeat">
             <option></option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>
+        
+        <input type="submit" hidden="hidden" name="search" value="Search">
         <br>
         <br>
         <input type="submit" name="search" value="Search">
-        <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
 
+        <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
     </form>
 
     <?php
@@ -84,12 +102,10 @@
             $result = mysqli_query($conn, $sql)";
         }
         ?>
-
-
     <br>
     <br>
     <div>
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -101,15 +117,18 @@
 
             <?php while ($row = mysqli_fetch_array($result)) { ?>
             <tr>
-                <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['size']; ?></td>
-                <td><?php echo $row['animalCount']; ?></td>
-                <td><?php echo $row['waterFeature']; ?></td>
+                <td class="success"><?php echo $row['name']; ?></td>
+                <td class="danger"><?php echo $row['size']; ?></td>
+                <td class="info"><?php echo $row['animalCount']; ?></td>
+                <td class="success"><?php echo $row['waterFeature']; ?></td>
             </tr>
         <?php } ?>
 
         </table>
     
     </div>
+    </div>
+
 </body>
+</div>
 </html>
