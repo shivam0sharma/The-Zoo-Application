@@ -60,7 +60,7 @@ body {
   cursor:pointer;
 }
 
-th:hover{
+th.sortable:hover{
     cursor: pointer;
 }
 
@@ -85,9 +85,9 @@ table, th, td {
         <table class="table table-bordered" id="staffShow">
             <thead>
                 <tr>
-                    <th onclick="tablesort(0)">Name</th>
-                    <th onclick="sortTable(1)">Time</th>
-                    <th onclick="sortTable(2)">Exhibit</th>
+                    <th class="sortable" onclick="tablesort(0)">Name</th>
+                    <th class="sortable" onclick="sortTable(1)">Time</th>
+                    <th>Exhibit</th>
                 </tr>
             </thead>
             <?php while($row = mysqli_fetch_array($result)) {?>

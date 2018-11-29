@@ -55,15 +55,16 @@
         $showTime = $_POST['showTime'];
 
         // form validation: ensure that the form is correctly filled
-        if (empty($name)) { array_push($errors, "Name is required"); }
-        if (empty($location)) { array_push($errors, "Exhibit Location is required"); }
-        if (empty($showTime)) { array_push($errors, "Show Time is required"); }
-
         // search show if there are no errors in the form
         if (count($errors) == 0) {
             // search in all table columns
             // using concat mysql function
-            $query = "SELECT * FROM ShowTable WHERE (name LIKE '%$name%') AND (location LIKE '%$location%') AND (showTime = '$showTime')";
+            if (empty($showTime)) {
+                $query = "SELECT * FROM ShowTable WHERE (name LIKE '%$name%') AND (location LIKE '%$location%')";
+            } else {
+                $query = "SELECT * FROM ShowTable WHERE (name LIKE '%$name%') AND (location LIKE '%$location%') AND (showTime like '%$showTime%')";
+            }
+            
             $search_result = mysqli_query($db, $query);
         } else {
             $query = "SELECT * FROM ShowTable";

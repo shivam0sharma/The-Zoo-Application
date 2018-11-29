@@ -3,12 +3,11 @@
    if(isset($_POST['search'])) {
        $nameToSearch = $_POST['showName'];
        $visitToSearch = $_POST['visitTime'];
-       $timeToSearch = $_POST['time'];
        $exhibitToSearch = $_POST['exhibit'];
    
        $user = $_SESSION['username'];
        $query = "SELECT * FROM `ShowVisit` INNER JOIN `ShowTable` ON showName = name WHERE name LIKE '%".$nameToSearch."%'
-           AND showTime LIKE '%".$visitToSearch."%' AND showTime LIKE '%".$timeToSearch."%' AND location LIKE '%".$exhibitToSearch."%'
+           AND showTime LIKE '%".$visitToSearch."%' AND location LIKE '%".$exhibitToSearch."%'
            AND visitor = '$user'";
        $search_result = filterTable($query);
    }
@@ -45,7 +44,7 @@
          background-color: rgb(246,242,241);
          }
 
-         th:hover{
+         th.sortable:hover{
          cursor: pointer;
          }
          .container {
@@ -87,16 +86,13 @@
       <div class="row">
          <form action="ShowHistory.php" method="post">
             <div class="container2">
-               <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name">
+               <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name" value="<?php echo isset($_POST['showName']) ? $_POST['showName'] : '';?>">
                <br>
                <br>
-               <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime">
+               <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime" value="<?php echo isset($_POST['visitTime']) ? $_POST['visitTime'] : '';?>">
                <br>
                <br>
-               <strong>Show Time: &nbsp; </strong><input type="time" name="time">
-               <br>
-               <br>
-               <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits">
+               <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
                <br>
                <br>
                <datalist id="Exhibits">
@@ -119,9 +115,9 @@
                <table class="table table-striped" id="showHistoryTable">
                <thead>
                <tr>
-               <th scope="col" onclick="sortTable(0)">Show Name</th>
-               <th scope="col" onclick="sortTable(1)">Date/Time</th>
-               <th scope="col" onclick="sortTable(2)">Exhibit</th>  
+               <th class="sortable" scope="col" onclick="sortTable(0)">Show Name</th>
+               <th class="sortable" scope="col" onclick="sortTable(1)">Date/Time</th>
+               <th scope="col">Exhibit</th>  
                </tr>
                </thead>
                <!-- populate table from mysql database -->

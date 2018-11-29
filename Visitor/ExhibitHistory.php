@@ -50,7 +50,7 @@
          background-color: rgb(246,242,241);
          }
 
-         th:hover{
+         th.sortable:hover{
          cursor: pointer;
          }
          .container {
@@ -92,7 +92,7 @@
       <div class="row">
          <form action="ExhibitHistory.php" method="post">
             <div class="container2">
-            <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name">
+            <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name" value="<?php echo isset($_POST['exhibitName']) ? $_POST['exhibitName'] : '';?>">
                <br>
                <br>
                <datalist id="Exhibits">
@@ -102,13 +102,13 @@
                   <option value="Pacific">
                   <option value="Sahara">
                </datalist>
-               <strong>Visited Date: &nbsp;</strong><input type="date" name="visitDate">
+               <strong>Visited Date: &nbsp;</strong><input type="date" name="visitDate" value="<?php echo isset($_POST['visitDate']) ? $_POST['visitDate'] : '';?>">
                <br>
                <br>
-               <strong>Num of Visit - Min: &nbsp; </strong><input type="text" name="minNum">
+               <strong>Num of Visit - Min: &nbsp; </strong><input type="text" name="minNum" value="<?php echo isset($_POST['minNum']) ? $_POST['minNum'] : '';?>">
                <br>
                <br>
-               <strong>Num of Visit - Max: &nbsp; </strong><input type="text" name="maxNum">
+               <strong>Num of Visit - Max: &nbsp; </strong><input type="text" name="maxNum" value="<?php echo isset($_POST['maxNum']) ? $_POST['maxNum'] : '';?>">
                <br>
                <br>
                <div>
@@ -124,9 +124,9 @@
                   <table class="table table-striped" id="exhibitHistoryTable">
                      <thead>
                         <tr>
-                           <th scope="col" onclick="sortTable(0)">Exhibit Name</th>
-                           <th scope="col" onclick="sortTable(1)">Date/Time</th>
-                           <th scope="col" onclick="sortTable(2)">Number of Visits</th>
+                           <th class="sortable" scope="col" onclick="sortTable(0)">Exhibit Name</th>
+                           <th class="sortable" scope="col" onclick="sortTable(1)">Date/Time</th>
+                           <th scope="col">Number of Visits</th>
                         </tr>
                      </thead>
                      <!-- populate table from mysql database -->
