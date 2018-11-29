@@ -9,7 +9,7 @@
     $location = "";
     $staff = "";
     $showTime = "";
-    $addShowTime
+    $addShowTime = "";
 
     $errors = array();
 
