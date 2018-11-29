@@ -65,6 +65,35 @@
             $min_size = $_POST['min_exhibit_num'];
             $max_size = $_POST['max_exhibit_num'];
 
+            if ($_POST['min_animal_num'] == 0) {
+                $min_num = 0;
+            } else {
+                $min_num = $_POST['min_animal_num'];
+            }
+            if ($_POST['max_animal_num'] == 0) {
+                $max_num = PHP_INT_MAX;
+            } else {
+                $max_num = $_POST['max_animal_num'];
+            }
+
+            if ($_POST['min_exhibit_num'] == 0) {
+                $min_size = 0;
+            } else {
+                $min_size = $_POST['min_exhibit_num'];
+            }
+            if ($_POST['max_exhibit_num'] == 0) {
+                $max_size = PHP_INT_MAX;
+            } else {
+                $max_size = $_POST['max_exhibit_num'];
+            }
+
+            if ($_POST['wfeat'] === "No") {
+                $water_feature = 0;
+            } else if ($_POST['wfeat'] === "Yes") {
+                $water_feature = 1;
+            } else {
+                $water_feature = -1;
+            }
 
 
             $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
@@ -72,7 +101,10 @@
             JOIN Animal
             ON Exhibit.name=Animal.exhibit
             WHERE Exhibit.name like '%" . $name . "%'
-            GROUP BY Exhibit.name";
+            AND size BETWEEN " . $min_size . " AND " . $max_size . "
+            AND waterFeature >= " .$water_feature . "
+            GROUP BY Exhibit.name
+            HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
             $result = mysqli_query($conn, $sql);
 
         } else {
@@ -80,8 +112,8 @@
             FROM Exhibit
             JOIN Animal
             ON Exhibit.name=Animal.exhibit
-            GROUP BY Exhibit.name
-            $result = mysqli_query($conn, $sql)";
+            GROUP BY Exhibit.name";
+            $result = mysqli_query($conn, $sql);
         }
         ?>
 
