@@ -149,7 +149,7 @@ table {
                         <label for="species">Species: </label>
                         <input type="text" class="form-control" id="species "name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
                         <label for="type">Type: </label>
-                        <input list="type" id="type1" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
+                        <input list="type" id="type1" name="type" autocomplete="off" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
                         <datalist id="type">
                             <option>Mammal</option>
                             <option>Bird</option>
@@ -162,7 +162,7 @@ table {
                     <br>
                     <div class="form-group row"  style="padding-top:10px">
                         <label for="exhibit" >Exhibit: </label>
-                        <input list="exhibit" id="exhibit1" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+                        <input list="exhibit" id="exhibit1" name="exhibit" autocomplete="off" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
                         <datalist id="exhibit">
                             <option>Birds</option>
                             <option>Jungle</option>
@@ -171,7 +171,7 @@ table {
                             <option>Sahara</option>
                         </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <input list="age-min" id="ageMin" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
+                        <input list="age-min" id="ageMin" name="ageMin" autocomplete="off" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
                         <datalist id="age-min">
                             <option>1</option>
                             <option>2</option>
@@ -184,7 +184,7 @@ table {
                         </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <input list="age-max" id="ageMax" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
+                        <input list="age-max" id="ageMax" name="ageMax" autocomplete="off" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
                         <datalist id="age-max">
                             <option>1</option>
                             <option>2</option>
