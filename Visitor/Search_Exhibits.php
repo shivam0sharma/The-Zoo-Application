@@ -41,26 +41,27 @@
     <br>
 
     <form method="POST" action="Search_Exhibits.php" id="search_params">
-        Name: <select type="text" name="name">
-            <option></option>
-            <option value="birds">Birds</option>
-            <option value="jungle">Jungle</option>
-            <option value="mountainous">Mountainous</option>
-            <option value="pacific">Pacific</option>
-            <option value="sahara">Sahara</option>
-        </select>
+        Name: <input list="Exhibits" name="name" placeholder="Exhibits" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
+        <datalist id="Exhibits">
+                  <option value="Birds">
+                  <option value="Jungle">
+                  <option value="Mountainous">
+                  <option value="Pacific">
+                  <option value="Sahara">
+               </datalist>
+        
         &emsp;&emsp;Number of Animals: &ensp;Min - 
-        <input type="number" min="0" name="min_animal_num" class="animal_num">
+        <input type="number" min="0" name="min_animal_num" class="animal_num" value="<?php echo isset($_POST['min_animal_num']) ? $_POST['min_animal_num'] : '';?>">
         &ensp;Max -
-        <input type="number" min="0" name="max_animal_num" class="animal_num">
+        <input type="number" min="0" name="max_animal_num" class="animal_num" value="<?php echo isset($_POST['max_animal_num']) ? $_POST['max_animal_num'] : '';?>">
         <br>
         <br>
         Exhibit Size: &ensp;Min -
-        <input type="number" min="0" step="10" name="min_exhibit_num" class="exhibit_num">
+        <input type="number" min="0" step="10" name="min_exhibit_num" class="exhibit_num" value="<?php echo isset($_POST['min_exhibit_num']) ? $_POST['min_exhibit_num'] : '';?>">
         &ensp;Max -
-        <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num">
+        <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num" value="<?php echo isset($_POST['max_exhibit_num']) ? $_POST['max_exhibit_num'] : '';?>">
         &emsp;Water Feature:
-        <select type="text" name="wfeat">
+        <select type="text" name="wfeat" value="<?php echo isset($_POST['waterFeature']) ? $_POST['waterFeature'] : '';?>">
             <option></option>
             <option value="Yes">Yes</option>
             <option value="No">No</option>

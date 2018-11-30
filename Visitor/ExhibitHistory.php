@@ -83,7 +83,7 @@
          }
          .container {
          margin: 0 auto;
-         width: 45%;
+         width: 50%;
          border: 3px solid #73AD21;
          padding: auto;
          margin-top: auto;
@@ -119,10 +119,8 @@
       </div>
       <div class="row">
          <form action="ExhibitHistory.php" method="post">
-            <div class="container2">
+            
             <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name" value="<?php echo isset($_POST['exhibitName']) ? $_POST['exhibitName'] : '';?>">
-               <br>
-               <br>
                <datalist id="Exhibits">
                   <option value="Birds">
                   <option value="Jungle">
@@ -130,25 +128,29 @@
                   <option value="Pacific">
                   <option value="Sahara">
                </datalist>
-               <strong>Visited Date: &nbsp;</strong><input type="date" name="visitDate" value="<?php echo isset($_POST['visitDate']) ? $_POST['visitDate'] : '';?>">
+               <strong>Visited Date: </strong><input type="date" name="visitDate" value="<?php echo isset($_POST['visitDate']) ? $_POST['visitDate'] : '';?>">
                <br>
                <br>
                <strong>Num of Visit - Min: &nbsp; </strong><input type="text" name="minNum" value="<?php echo isset($_POST['minNum']) ? $_POST['minNum'] : '';?>">
-               <br>
-               <br>
                <strong>Num of Visit - Max: &nbsp; </strong><input type="text" name="maxNum" value="<?php echo isset($_POST['maxNum']) ? $_POST['maxNum'] : '';?>">
                <br>
-               <br>
                <div>
+               <br>
+               <br>
                <input type="submit" name="search" value="Search">
                <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
+               <br>
+               <br>
+               <br>
                </div>
                <br>
                <div class="row2">
                </div>
                <br>
                <br>
-               <div class="row">
+               
+               <br>
+               <br>
                   <table class="table table-striped" id="exhibitHistoryTable">
                      <thead>
                         <tr>
@@ -180,16 +182,13 @@
                               echo "<a href='ExhibitDetailSahara.php?'</a>";
                            }
                         }
-
                         echo $row['exhibit'];?></td>
                         <td class="danger"><?php echo $row["visitTime"];?></td>
                         <td class="info"><?php echo $row["visits"];?></td>
                         </tr>
-
                      <?php } endwhile?>
                   </table>
-               </div>
-            </div>
+               
          </form>
       </div>
 
