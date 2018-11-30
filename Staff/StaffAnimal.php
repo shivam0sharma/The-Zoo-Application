@@ -12,14 +12,6 @@ if (isset($_POST['search'])) {
     $typeToSearch = $_POST['type'];
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
-    $_SESSION['name'] = $animalToSearch;
-    $_SESSION['species'] = $speciesToSearch;
-    $_SESSION['exhibit'] = $exhibitToSearch;
-    $_SESSION['type'] = $typeToSearch;
-    $_SESSION['ageMin'] = $ageMinToSearch;
-    $_SESSION['ageMax'] = $ageMaxToSearch;
-
-    echo $_SESSION['name'];
 
     if (empty($ageMinToSearch)) {
         $ageMinToSearch = 1;
@@ -47,13 +39,6 @@ if (isset($_POST['search'])) {
     }
 } else {
 
-    $animalToSearch = $_SESSION['name'];
-    $speciesToSearch = $_SESSION['species'];
-    $exhibitToSearch = $_SESSION['exhibit'];
-    $typeToSearch = $_SESSION['type'];
-    $ageMinToSearch = $_SESSION['ageMin'];
-    $ageMaxToSearch = $_SESSION['ageMax'];
-
     if (empty($ageMinToSearch)) {
         $ageMinToSearch = 1;
     }
@@ -71,8 +56,6 @@ if (isset($_POST['search'])) {
     }
 }
 
-    
-    echo $query;
     $search_result = filterTable($query);
 // function to connect and execute the query
 function filterTable($query)
@@ -224,7 +207,7 @@ table {
                     <th onclick="sort('name')">Name</th>
                     <th onclick="sort('species')">Species</th>
                     <th onclick="sort('exhibit')">Exhibit</th>
-                    <th onclick="sort('age')">Age (in months)</th>
+                    <th onclick="sort('age')">Age (months)</th>
                     <th onclick="sort('animalType')">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
@@ -257,20 +240,7 @@ $("document").ready(function() {
 });
 
 function sort(type) {
-    //window.location = './StaffAnimal.php?sort=' + type;
-
-    if (type == 0) {
-        <?php $_SESSION['sort'] = "name";?>
-    } else if (type == 1) {
-        <?php $_SESSION['sort'] = "species";?>
-    } else if (type == 2) {
-        <?php $_SESSION['sort'] = "exhibit";?>
-    } else if (type == 3) {
-        <?php $_SESSION['sort'] = "age";?>
-    } else if (type == 4) {
-        <?php $_SESSION['sort'] = "animalType";?>
-    }
-    $("#form").submit();
+    window.location = './StaffAnimal.php?sort=' + type;
 }
 </script>
 
