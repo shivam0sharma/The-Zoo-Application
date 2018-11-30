@@ -43,12 +43,13 @@
     <form method="POST" action="Search_Exhibits.php" id="search_params">
         Name: <input list="Exhibits" name="name" placeholder="Exhibits" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         <datalist id="Exhibits">
+                  <option value="">
                   <option value="Birds">
                   <option value="Jungle">
                   <option value="Mountainous">
                   <option value="Pacific">
                   <option value="Sahara">
-               </datalist>
+        </datalist>
         
         &emsp;&emsp;Number of Animals: &ensp;Min - 
         <input type="number" min="0" name="min_animal_num" class="animal_num" value="<?php echo isset($_POST['min_animal_num']) ? $_POST['min_animal_num'] : '';?>">
@@ -61,10 +62,12 @@
         &ensp;Max -
         <input type="number" min="0" step="10" name="max_exhibit_num" class="exhibit_num" value="<?php echo isset($_POST['max_exhibit_num']) ? $_POST['max_exhibit_num'] : '';?>">
         &emsp;Water Feature:
-        <select type="text" name="wfeat" value="<?php echo isset($_POST['waterFeature']) ? $_POST['waterFeature'] : '';?>">
-            <option></option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
+        <input list="wfeat" name="wfeat" value="<?php echo isset($_POST['wfeat']) ? $_POST['wfeat'] : '';?>">
+            <datalist id="wfeat">
+                <option value="">
+                <option value="Yes">
+                <option value="No">
+            </datalist>
         
         <input type="submit" hidden="hidden" name="search" value="Search">
         <br>

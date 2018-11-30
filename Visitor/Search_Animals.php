@@ -43,32 +43,34 @@
     <br>
 
     <form method="POST" action="Search_Animals.php" id="search_params">
-        Name: <input type="text" name="name" class="text">
+        Name: <input type="text" name="name" class="text" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         &emsp;Age: &ensp;Min -
-        <input type="number" min="0" name="min_animal_num" class="age_num">
+        <input type="number" min="0" name="min_animal_num" class="age_num" value="<?php echo isset($_POST['min_animal_num']) ? $_POST['min_animal_num'] : '';?>">
         &ensp;&ensp;&ensp;Max -
-        <input type="number" min="0" name="max_animal_num" class="age_num">
+        <input type="number" min="0" name="max_animal_num" class="age_num" value="<?php echo isset($_POST['max_animal_num']) ? $_POST['max_animal_num'] : '';?>">
         <br>
         <br>
         Species:
-        <input type="text" name="species" class="text">
+        <input type="text" name="species" class="text" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
         &emsp;&ensp;Type:
-        <select name="select_type" id="type">
+        <input list="types" name="select_type" id="type" value="<?php echo isset($_POST['select_type']) ? $_POST['select_type'] : '';?>">
+            <datalist id="types">
             <option></option>
-            <option value="amphibian">Amphibian</option>
-            <option value="bird">Bird</option>
-            <option value="fish">Fish</option>
-            <option value="mammal">Mammal</option>
-        </select>
+            <option value="amphibian">
+            <option value="bird">
+            <option value="fish">
+            <option value="mammal">
+        </datalist>
         &emsp;Exhibit:
-        <select name="select_exhibit" id="exhibit">
+        <input list="select_exhibit" name="select_exhibit" id="exhibit" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
+            <datalist id="select_exhibit">
             <option></option>
-            <option value="birds">Birds</option>
-            <option value="jungle">Jungle</option>
-            <option value="mountainous">Mountainous</option>
-            <option value="sahara">Sahara</option>
-            <option value="pacific">Pacific</option>
-        </select>
+            <option value="birds">
+            <option value="jungle">
+            <option value="mountainous">
+            <option value="sahara">
+            <option value="pacific">
+        </datalist>
         <br>
         <br>
         <input type="submit" name="search" value="Search">
@@ -150,7 +152,7 @@
                 return $(this).text();
             }).get();
 
-            var location = "./AnimalCare.php?";
+            var location = "./AnimalDetail.php?";
             location = location + "name=" + tableData[0];
             location = location + "&species=" + tableData[1];
             location = location.replace(/ /g, "_");
