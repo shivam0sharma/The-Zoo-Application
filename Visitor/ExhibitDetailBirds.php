@@ -1,7 +1,14 @@
 <?php
        session_start();
+       $sort;
+       if (isset($_GET['sort'])) {
+          $sort = $_GET['sort'];
+       }
        $user = $_SESSION['username'];
        $query = "SELECT name,species FROM `Animal` WHERE exhibit='Birds'";
+       if (!empty($sort)) {
+          $query = $query . 'ORDER BY Animal.' . $sort;
+       }
        $search_result = filterTable($query);
        // function to connect and execute the query
        function filterTable($query) {
@@ -138,8 +145,8 @@
                   <table class="table table-striped" id="exhibitTable">
                      <thead>
                         <tr>
-                           <th scope="col" onclick="sortTable(0)">Animal Name</th>
-                           <th scope="col" onclick="sortTable(1)">Species</th>
+                           <th scope="col" onclick="sort('name')">Animal Name</th>
+                           <th scope="col" onclick="sort('species')">Species</th>
                         </tr>
                      </thead>
                      <!-- populate table from mysql database -->
@@ -154,6 +161,7 @@
             </div>
       </div>
 <script>
+
 $("document").ready(function() {
     $("tr.data").click(function() {
         var tableData = $(this).children("td").map(function() {
@@ -168,6 +176,10 @@ $("document").ready(function() {
         window.location = location;
     });
    });
+   
+function sort(type) {
+    window.location = './ExhibitDetailBirds.php?sort=' + type;
+}
 function sortTable(n) {
   var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("exhibitTable");

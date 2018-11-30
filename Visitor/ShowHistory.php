@@ -92,16 +92,14 @@
       </div>
       <div class="row">
          <form action="ShowHistory.php" method="post">
-            <div class="container2">
+            
                <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name" value="<?php echo isset($_POST['showName']) ? $_POST['showName'] : '';?>">
                <br>
                <br>
                <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime" value="<?php echo isset($_POST['visitTime']) ? $_POST['visitTime'] : '';?>">
-               <br>
-               <br>
-               <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
-               <br>
-               <br>
+               
+               <strong>&nbsp;&nbsp;Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+               
                <datalist id="Exhibits">
                   <option value="Birds">
                   <option value="Jungle">
@@ -110,15 +108,16 @@
                   <option value="Sahara">
                </datalist>
                <div>
+               <br>
+               <br>
                <input type="submit" name="search" value="Search">
                <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
                </div>
                <br>
-               <div class="row2">
+               
                </div>
-               <br>
-               <br>
-               <div class="row">
+               
+               
                <table class="table table-striped" id="showHistoryTable">
                <thead>
                <tr>
@@ -136,10 +135,10 @@
                </tr>
                <?php endwhile;?>
                </table>
-               </div>
-            </div>
+              
+            
          </form>
-      </div>
+     
 
 <script>
 function sort(type) {
