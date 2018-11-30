@@ -5,11 +5,29 @@ $sort;
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 }
+if (isset($_POST['search'])) {
     $animalToSearch = $_POST['name'];
     $speciesToSearch = $_POST['species'];
     $exhibitToSearch = $_POST['exhibit'];
+    $typeToSearch = $_POST['type'];
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
+    $_SESSION['name'] = $animalToSearch;
+    $_SESSION['species'] = $speciesToSearch;
+    $_SESSION['exhibit'] = $exhibitToSearch;
+    $_SESSION['type'] = $typeToSearch;
+    $_SESSION['ageMin'] = $ageMinToSearch;
+    $_SESSION['ageMax'] = $ageMaxToSearch;
+
+    echo $_SESSION['name'];
+
+    if (empty($ageMinToSearch)) {
+        $ageMinToSearch = 1;
+    }
+    if (empty($ageMaxToSearch)) {
+        $ageMaxToSearch = 8;
+    }
+
     
     if ($ageMaxToSearch < $ageMinToSearch) {
         $ageMinToSearch = 1;
@@ -17,13 +35,7 @@ if (isset($_GET['sort'])) {
         $ageMaxToSearch = 8;
         $_POST['ageMax'] = 8;
     }
-    if(empty($ageMinToSearch)) {
-        $ageMinToSearch = 1;
-    }
-    if(empty($ageMaxToSearch)) {
-        $ageMaxToSearch = 8;
-    }
-    $typeToSearch = $_POST['type'];
+    
     if (empty($sort)){
         $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
@@ -33,6 +45,34 @@ if (isset($_GET['sort'])) {
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
         AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
     }
+} else {
+
+    $animalToSearch = $_SESSION['name'];
+    $speciesToSearch = $_SESSION['species'];
+    $exhibitToSearch = $_SESSION['exhibit'];
+    $typeToSearch = $_SESSION['type'];
+    $ageMinToSearch = $_SESSION['ageMin'];
+    $ageMaxToSearch = $_SESSION['ageMax'];
+
+    if (empty($ageMinToSearch)) {
+        $ageMinToSearch = 1;
+    }
+    if (empty($ageMaxToSearch)) {
+        $ageMaxToSearch = 8;
+    }
+    if (empty($sort)){
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+    } else {
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
+    }
+}
+
+    
+    echo $query;
     $search_result = filterTable($query);
 // function to connect and execute the query
 function filterTable($query)
@@ -119,14 +159,14 @@ table {
     </div>
     <br>
     <div class="container">
-            <form class="form-inline" method="post" action="StaffAnimal.php">
+            <form class="form-inline" id="form" method="post" action="StaffAnimal.php">
                     <div class="form-group row">
                         <label for="name" >Name: </label>
-                        <input type="text" class="form-control" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
                         <label for="species">Species: </label>
-                        <input type="text" class="form-control" name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
+                        <input type="text" class="form-control" id="species "name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
                         <label for="type">Type: </label>
-                        <input list="type" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
+                        <input list="type" id="type1" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
                         <datalist id="type">
                             <option>Mammal</option>
                             <option>Bird</option>
@@ -139,7 +179,7 @@ table {
                     <br>
                     <div class="form-group row"  style="padding-top:10px">
                         <label for="exhibit" >Exhibit: </label>
-                        <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+                        <input list="exhibit" id="exhibit1" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
                         <datalist id="exhibit">
                             <option>Birds</option>
                             <option>Jungle</option>
@@ -148,7 +188,7 @@ table {
                             <option>Sahara</option>
                         </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
+                        <input list="age-min" id="ageMin" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
                         <datalist id="age-min">
                             <option>1</option>
                             <option>2</option>
@@ -161,7 +201,7 @@ table {
                         </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
+                        <input list="age-max" id="ageMax" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
                         <datalist id="age-max">
                             <option>1</option>
                             <option>2</option>
@@ -217,7 +257,20 @@ $("document").ready(function() {
 });
 
 function sort(type) {
-    window.location = './StaffAnimal.php?sort=' + type;
+    //window.location = './StaffAnimal.php?sort=' + type;
+
+    if (type == 0) {
+        <?php $_SESSION['sort'] = "name";?>
+    } else if (type == 1) {
+        <?php $_SESSION['sort'] = "species";?>
+    } else if (type == 2) {
+        <?php $_SESSION['sort'] = "exhibit";?>
+    } else if (type == 3) {
+        <?php $_SESSION['sort'] = "age";?>
+    } else if (type == 4) {
+        <?php $_SESSION['sort'] = "animalType";?>
+    }
+    $("#form").submit();
 }
 </script>
 
