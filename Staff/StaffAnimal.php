@@ -5,20 +5,29 @@ $sort;
 if (isset($_GET['sort'])) {
     $sort = $_GET['sort'];
 }
-
-if(isset($_POST['search']))
-{
+if (isset($_POST['search'])) {
     $animalToSearch = $_POST['name'];
     $speciesToSearch = $_POST['species'];
     $exhibitToSearch = $_POST['exhibit'];
+    $typeToSearch = $_POST['type'];
     $ageMinToSearch = $_POST['ageMin'];
     $ageMaxToSearch = $_POST['ageMax'];
+
+    if (empty($ageMinToSearch)) {
+        $ageMinToSearch = 1;
+    }
+    if (empty($ageMaxToSearch)) {
+        $ageMaxToSearch = 8;
+    }
+
     
     if ($ageMaxToSearch < $ageMinToSearch) {
         $ageMinToSearch = 1;
+        $_POST['ageMin'] = 1;
         $ageMaxToSearch = 8;
+        $_POST['ageMax'] = 8;
     }
-    $typeToSearch = $_POST['type'];
+    
     if (empty($sort)){
         $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
@@ -28,25 +37,26 @@ if(isset($_POST['search']))
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
         AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
     }
-    
-    $type = $typeToSearch;
-    $exhibit = $exhibitToSearch;
-    $min = $ageMinToSearch;
-    $max = $ageMaxToSearch;
-    $search_result = filterTable($query);
-    
-}
- else {
+} else {
 
-    if (empty($sort)) {
-        $query = "SELECT * FROM `Animal`";
-    } else {
-        
-        $query = "SELECT * FROM `Animal` ORDER BY Animal.$sort ASC";
+    if (empty($ageMinToSearch)) {
+        $ageMinToSearch = 1;
     }
-    $search_result = filterTable($query);
-    
+    if (empty($ageMaxToSearch)) {
+        $ageMaxToSearch = 8;
+    }
+    if (empty($sort)){
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch)";
+    } else {
+        $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
+        AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
+    }
 }
+
+    $search_result = filterTable($query);
 // function to connect and execute the query
 function filterTable($query)
 {
@@ -132,14 +142,14 @@ table {
     </div>
     <br>
     <div class="container">
-            <form class="form-inline" method="post" action="StaffAnimal.php">
+            <form class="form-inline" id="form" method="post" action="StaffAnimal.php">
                     <div class="form-group row">
                         <label for="name" >Name: </label>
-                        <input type="text" class="form-control" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
+                        <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
                         <label for="species">Species: </label>
-                        <input type="text" class="form-control" name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
+                        <input type="text" class="form-control" id="species "name="species" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
                         <label for="type">Type: </label>
-                        <input list="type" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
+                        <input list="type" id="type1" name="type" value="<?php echo isset($_POST['type']) ? $_POST['type'] : '';?>">
                         <datalist id="type">
                             <option>Mammal</option>
                             <option>Bird</option>
@@ -152,7 +162,7 @@ table {
                     <br>
                     <div class="form-group row"  style="padding-top:10px">
                         <label for="exhibit" >Exhibit: </label>
-                        <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+                        <input list="exhibit" id="exhibit1" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
                         <datalist id="exhibit">
                             <option>Birds</option>
                             <option>Jungle</option>
@@ -161,7 +171,7 @@ table {
                             <option>Sahara</option>
                         </datalist>
                         <label for="age-min" >Min Age: </label>
-                        <input list="age-min" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : '';?>">
+                        <input list="age-min" id="ageMin" name="ageMin" value="<?php echo isset($_POST['ageMin']) ? $_POST['ageMin'] : 1;?>">
                         <datalist id="age-min">
                             <option>1</option>
                             <option>2</option>
@@ -174,7 +184,7 @@ table {
                         </datalist>
                         </select>
                         <label for="age-max" >Max Age: </label>
-                        <input list="age-max" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : '';?>">
+                        <input list="age-max" id="ageMax" name="ageMax" value="<?php echo isset($_POST['ageMax']) ? $_POST['ageMax'] : 8;?>">
                         <datalist id="age-max">
                             <option>1</option>
                             <option>2</option>
@@ -197,7 +207,7 @@ table {
                     <th onclick="sort('name')">Name</th>
                     <th onclick="sort('species')">Species</th>
                     <th onclick="sort('exhibit')">Exhibit</th>
-                    <th onclick="sort('age')">Age (in months)</th>
+                    <th onclick="sort('age')">Age (months)</th>
                     <th onclick="sort('animalType')">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>
