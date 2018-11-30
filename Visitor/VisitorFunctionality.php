@@ -106,7 +106,7 @@
          }
          .logOut:hover {
          background: #e7e7e7;
-         color: white;
+         color: black;
          margin:auto;
          }
         .GeneratedMarquee {
