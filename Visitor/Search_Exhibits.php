@@ -108,11 +108,9 @@
                 }
 
                 if ($_POST['wfeat'] === "No") {
-                    $water_feature = 0;
+                    $water_feature = "0";
                 } else if ($_POST['wfeat'] === "Yes") {
-                    $water_feature = 1;
-                } else {
-                    $water_feature = -1;
+                    $water_feature = "1";
                 }
 
 
@@ -193,7 +191,13 @@
                 <td class="success"><?php echo $row['name']; ?></td>
                 <td class="danger"><?php echo $row['size']; ?></td>
                 <td class="info"><?php echo $row['animalCount']; ?></td>
-                <td class="success"><?php echo $row['waterFeature']; ?></td>
+                <?php
+                    if ($row['waterFeature']) {
+                       ?><td class="success"><?php echo "Yes"; ?></td>
+            <?php   } else {
+                        ?><td class="success"><?php echo "No"; ?></td><?php
+                    }
+                ?>
             </tr>
         <?php } ?>
 
