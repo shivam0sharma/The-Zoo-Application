@@ -1,5 +1,11 @@
 <?php
    session_start();
+   $sort;
+   if (isset($_GET['sort'])) {
+      $sort = $_GET['sort'];
+   }
+
+
    if(isset($_POST['search'])) {
        $nameToSearch = $_POST['exhibitName'];
        $visitDateToSearch = $_POST['visitDate'];
@@ -16,8 +22,30 @@
        $query = "SELECT a.exhibit, a.visitTime, b.visits FROM ExhibitVisit a
        join (SELECT exhibit, COUNT(distinct visitTime) visits FROM ExhibitVisit where visitor = '$user' and exhibit like '%".$nameToSearch."%' and visitTime like '%".$visitDateToSearch."%' group by exhibit) b 
        on a.exhibit = b.exhibit where a.visitor = '$user' and a.exhibit like '%".$nameToSearch."%' and a.visitTime like '%".$visitDateToSearch."%'";
+      
+      if(!empty($sort)) {
+         $query = $query . ' ORDER BY ExhibitVisit.' . $sort;
+      }
+      $search_result = filterTable($query);
+   } else {
+       
+       $user = $_SESSION['username'];
+       $query = "SELECT a.exhibit, a.visitTime, b.visits FROM ExhibitVisit a
+       join (SELECT exhibit, COUNT(distinct visitTime) visits FROM ExhibitVisit where visitor = '$user' group by exhibit) b 
+       on a.exhibit = b.exhibit where a.visitor = '$user'";
+
+      if(!empty($sort)) {
+         $query = $query . ' ORDER BY a.' . $sort;
+      }
+       
+       if (empty($minToSearch)) {
+         $minToSearch = 1;
+       }
+      if (empty($maxToSearch)) {
+        $maxToSearch = 1000;
+     }
        $search_result = filterTable($query);
-}
+   }
        // function to connect and execute the query
        function filterTable($query) {
        $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
@@ -124,8 +152,8 @@
                   <table class="table table-striped" id="exhibitHistoryTable">
                      <thead>
                         <tr>
-                           <th class="sortable" scope="col" onclick="sortTable(0)">Exhibit Name</th>
-                           <th class="sortable" scope="col" onclick="sortTable(1)">Date/Time</th>
+                           <th class="sortable" scope="col" onclick="sort('exhibit')">Exhibit Name</th>
+                           <th class="sortable" scope="col" onclick="sort('visitTime')">Date/Time</th>
                            <th scope="col">Number of Visits</th>
                         </tr>
                      </thead>
@@ -166,59 +194,8 @@
       </div>
 
 <script>
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("exhibitHistoryTable");
-  switching = true;
-  // Set the sorting direction to ascending:
-  dir = "asc"; 
-  /* Make a loop that will continue until
-  no switching has been done: */
-  while (switching) {
-    // Start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /* Loop through all table rows (except the
-    first, which contains table headers): */
-    for (i = 1; i < (rows.length - 1); i++) {
-      // Start by saying there should be no switching:
-      shouldSwitch = false;
-      /* Get the two elements you want to compare,
-      one from current row and one from the next: */
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /* Check if the two rows should switch place,
-      based on the direction, asc or desc: */
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          // If so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /* If a switch has been marked, make the switch
-      and mark that a switch has been done: */
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      // Each time a switch is done, increase this count by 1:
-      switchcount ++; 
-    } else {
-      /* If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again. */
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
+function sort(type) {
+    window.location = './ExhibitHistory.php?sort=' + type;
 }
 </script>
    </body>
