@@ -64,7 +64,6 @@ th:hover{
 <div class="center">
     <div class="container">
         <a href="./VisitorFunctionality.php"><button class="btn">Go Home</button></a>
-        <a href="./ExhibitHistory.php"><button class="btn">Go Back</button></a>
     </div>
     <br>
     <div class="container">
