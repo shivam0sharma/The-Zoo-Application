@@ -32,7 +32,6 @@
         $user = $_SESSION['username'];
         $insert = "INSERT INTO ExhibitVisit (visitor, exhibit, visitTime)
         VALUES ('$user', '$exhibit', NOW())";
-        echo $insert;
 
         $insertCmd = mysqli_query($ntwk, $insert);
         if ($insertCmd) {
