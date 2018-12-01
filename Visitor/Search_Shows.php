@@ -1,3 +1,22 @@
+<?php
+        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+        if (isset($_POST['search'])) {
+            $name = $_POST['name'];
+            $exhibit = $_POST['select_exhibit'];
+            $date = $_POST['date'];
+
+            $sql = "SELECT name, location, showTime 
+            FROM ShowTable 
+            WHERE name like '%" . $name . "%' 
+            AND location like '%" . $exhibit . "%'
+            AND showTime like '%" . $date . "%'";
+    
+            $result = mysqli_query($conn, $sql);
+        } else {
+            $sql = "SELECT name, location, showTime FROM ShowTable";
+            $result = mysqli_query($conn, $sql);
+        }
+    ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,11 +62,11 @@
 
     <form method="post" action="Search_Shows.php" id="search_params">
         Name: 
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         &emsp;Date:
-        <input type="date" name="date" id="date">
+        <input type="date" name="date" id="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : '';?>">
         &emsp;Exhibit:
-        <select name="select_exhibit" id="exhibit">
+        <select name="select_exhibit" id="exhibit" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
             <option></option>
             <option value="pacific">Pacific</option>
             <option value="jungle">Jungle</option>
@@ -60,25 +79,7 @@
         <br>
     </form>
 
-    <?php
-        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
-        if (isset($_POST['search'])) {
-            $name = $_POST['name'];
-            $exhibit = $_POST['select_exhibit'];
-            $date = $_POST['date'];
-
-            $sql = "SELECT name, location, showTime 
-            FROM ShowTable 
-            WHERE name like '%" . $name . "%' 
-            AND location like '%" . $exhibit . "%'
-            AND showTime like '%" . $date . "%'";
     
-            $result = mysqli_query($conn, $sql);
-        } else {
-            $sql = "SELECT name, location, showTime FROM ShowTable";
-            $result = mysqli_query($conn, $sql);
-        }
-    ?>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -89,7 +90,7 @@
         </thead>
 
         <?php while ($row = mysqli_fetch_array($result)) { ?>
-            <tr>
+            <tr class="data">
                 <td class="success"><?php echo $row['name']; ?></td>
                 <td class="danger"><?php echo $row['location']; ?></td>
                 <td class="info"><?php echo $row['showTime']; ?></td>
@@ -100,6 +101,22 @@
     <br>
     <br>
 </body>
+<script>
+$("document").ready(function() {
+    $("tr.data").click(function() {
+        var tableData = $(this).children("td").map(function() {
+            return $(this).text();
+        }).get();
+
+        var location = "./ShowDetail.php?";
+        location = location + "name=" + tableData[0];
+        location = location + "&location=" + tableData[1];
+        location = location.replace(/ /g, "_");
+
+        window.location = location;
+    });
+});
+</script>
 
 
 </div>
