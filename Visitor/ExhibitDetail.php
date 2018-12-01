@@ -7,16 +7,20 @@
     $ntwk = mysqli_connect($hostname, $username, $password, $database);
     
     $name = str_replace('_', " ", htmlspecialchars($_GET["name"]));
-    $time = str_replace('_', " ", htmlspecialchars($_GET["time"]));
-    $detailsQuery = "SELECT * FROM ShowTable WHERE (name like '%".$name."%' AND showTime LIKE '%".$time."%')";
+    $detailsQuery = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
+    FROM Exhibit
+    JOIN Animal
+    ON Exhibit.name=Animal.exhibit
+    WHERE Exhibit.name like '%" . $name . "%'";
     $details = mysqli_query($ntwk, $detailsQuery);
     $details = mysqli_fetch_array($details);
-    $time = $details['showTime'];
-    
+    $exhibit = $details['name'];
+
     if(isset($_POST['log'])) {
         $user = $_SESSION['username'];
-        $insert = "INSERT INTO ShowVisit (visitor, showName, visitTime)
-        VALUES ('$user', '$name', '$time')";
+        $insert = "INSERT INTO ExhibitVisit (visitor, exhibit, visitTime)
+        VALUES ('$user', '$exhibit', NOW())";
+        echo $insert;
 
         $insertCmd = mysqli_query($ntwk, $insert);
         if ($insertCmd) {
@@ -30,12 +34,12 @@
         }
         
     }
-
+    
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Show Detail</title>
+<title>Animal Detail</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/png" href="../images/zoo_icon.png">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -63,6 +67,9 @@ body {
   font-size: auto;
   cursor:pointer;
 }
+th:hover{
+    cursor: pointer;
+}
 
 .alert{
     width: 25%;
@@ -73,43 +80,58 @@ body {
 <body>
 
 <br>
-<h1 style="text-align:center;">Show Detail</h1>
+<h1 style="text-align:center;">Exhibit Detail</h1>
 
 <div class="center">
     <div class="container">
-        <a href="VisitorFunctionality.php"><button class="btn">Go Home</button></a>
+        <a href="./VisitorFunctionality.php"><button class="btn">Go Home</button></a>
     </div>
     <br>
     <div class="container">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <?php 
                     echo '<h4>Name: ' . $details['name'];
                 ?>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <?php 
-                    echo '<h4>Location: ' . $details['location'];
+                    echo '<h4>Size: ' . $details['size'];
                 ?>
             </div>
+            <div class="col-sm-2">
+                <?php
+                    if ($details['waterFeature']) {
+                        echo '<h4>Water Feature: Yes';
+                    } else {
+                        echo '<h4>Water Feature: No';
+                    }
+                ?>
+            </div>
+            
         </div>
         <div class="row">
-            <div class="col-sm-4">
-                <?php 
-                    echo '<h4>Time: ' . $details['showTime'];
+            <div class="col-sm-3">
+                <?php
+                    echo '<h4>Number of Animals: ' . $details['animalCount'];
                 ?>
             </div>
-            <form id="logForm"method="post" action=>
-                <button class="btn" type="submit" name="log">Log Visit</button>
-                <div class="col-sm-10 col-sm-offset-2">
-                    <?php echo $insert_result; ?>    
-                </div>
-            </form>
-        
         </div>
+        <form id="logForm"method="post" action=>
+            <button class="btn" type="submit" name="log">Log Visit</button>
+            <div class="col-sm-10 col-sm-offset-2">
+                <?php echo $insert_result; ?>    
+            </div>
+        </form>
+
+        
         
     </div>
 </div>
 
 </body>
 </html>
+
+<script>
+
+</script>

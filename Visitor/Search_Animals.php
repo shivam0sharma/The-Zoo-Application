@@ -1,3 +1,52 @@
+<?php
+        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+
+        $sort;
+        if (isset($_GET['sort'])) {
+            $sort = $_GET['sort'];
+        }
+        if (isset($_POST['search'])) {
+            $name = $_POST['name'];
+            $species = $_POST['species'];
+            $animal_type = $_POST['select_type'];
+            $exhibit = $_POST['select_exhibit'];
+            if ($_POST['min_animal_num'] == 0) {
+                $min_age = 0;
+            } else {
+                $min_age = $_POST['min_animal_num'];
+            }
+
+            if ($_POST['max_animal_num'] == 0) {
+                $max_age = PHP_INT_MAX;
+            } else {
+                $max_age = $_POST['max_animal_num'];
+            }            
+            
+
+
+            $sql = "SELECT name, species, exhibit, age, animalType
+            FROM Animal
+            WHERE name like '%" . $name . "%'
+            AND species like '%" . $species . "%'
+            AND animalType like '%" . $animal_type . "%'
+            AND exhibit like '%" . $exhibit . "%'
+            AND age >= " . $min_age . "
+            AND age <= " . $max_age;
+            if (!empty($sort)) {
+                $sql = $sql . ' ORDER BY Animal.' . $sort;
+            }
+            $result = mysqli_query($conn, $sql);
+        } else {
+
+            $sql = "SELECT name, species, exhibit, age, animalType
+            FROM Animal";
+            if (!empty($sort)) {
+                $sql = $sql . ' ORDER BY Animal.' . $sort;
+            }
+            $result = mysqli_query($conn, $sql);
+
+        }
+    ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +77,12 @@
          margin-top: -20%;
          margin-left: 130%;
          margin-right: 0%;
+         }
+         th {
+             cursor: pointer;
+         }
+         tr.data {
+             cursor: pointer;
          }
     </style>
         <div align="center" class="container">
@@ -78,56 +133,18 @@
 
     </form>
 
-    <?php
-        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
-
-        if (isset($_POST['search'])) {
-            $name = $_POST['name'];
-            $species = $_POST['species'];
-            $animal_type = $_POST['select_type'];
-            $exhibit = $_POST['select_exhibit'];
-            if ($_POST['min_animal_num'] == 0) {
-                $min_age = 0;
-            } else {
-                $min_age = $_POST['min_animal_num'];
-            }
-
-            if ($_POST['max_animal_num'] == 0) {
-                $max_age = PHP_INT_MAX;
-            } else {
-                $max_age = $_POST['max_animal_num'];
-            }            
-            
-
-
-            $sql = "SELECT name, species, exhibit, age, animalType
-            FROM Animal
-            WHERE name like '%" . $name . "%'
-            AND species like '%" . $species . "%'
-            AND animalType like '%" . $animal_type . "%'
-            AND exhibit like '%" . $exhibit . "%'
-            AND age >= " . $min_age . "
-            AND age <= " . $max_age;
-            $result = mysqli_query($conn, $sql);
-        } else {
-
-            $sql = "SELECT name, species, exhibit, age, animalType
-            FROM Animal";
-            $result = mysqli_query($conn, $sql);
-
-        }
-    ?>
+    
     <br>
     <br>
     <div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Species</th>
-                    <th scope="col">Exhibit</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Type</th>
+                    <th onclick="sort('name')">Name</th>
+                    <th onclick="sort('species')">Species</th>
+                    <th onclick="sort('exhibit')">Exhibit</th>
+                    <th onclick="sort('age')">Age (months)</th>
+                    <th onclick="sort('animalType')">Type</th>
                 </tr>
             </thead>
 
@@ -160,6 +177,10 @@
             window.location = location;
         }); 
     });
+
+    function sort(type) {
+        window.location = './Search_Animals.php?sort=' + type;
+    }
     </script>
 </body>
 

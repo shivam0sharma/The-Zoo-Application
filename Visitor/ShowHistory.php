@@ -79,6 +79,9 @@
          margin-left: 130%;
          margin-right: 0%;
          }
+         tr.data {
+            cursor: pointer;
+         }
       </style>
       <div align="center" class="container">
       <div align="center" class="headerTitle">
@@ -128,7 +131,7 @@
                </thead>
                <!-- populate table from mysql database -->
                <?php while($row = mysqli_fetch_array($search_result)):?>
-               <tr>
+               <tr class="data">
                <td class="success"><?php echo $row['showName'];?></td>
                <td class="danger"><?php echo $row['visitTime'];?></td>
                <td class="info"><?php echo $row['location'];?></td>
@@ -141,6 +144,20 @@
      
 
 <script>
+$("document").ready(function() {
+    $("tr.data").click(function() {
+        var tableData = $(this).children("td").map(function() {
+            return $(this).text();
+        }).get();
+
+        var location = "./ShowDetail.php?";
+        location = location + "name=" + tableData[0];
+        location = location + "&time=" + tableData[1];
+        location = location.replace(/ /g, "_");
+
+        window.location = location;
+    });
+});
 function sort(type) {
    
     window.location = './ShowHistory.php?sort=' + type;

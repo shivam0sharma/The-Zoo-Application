@@ -106,6 +106,9 @@
          margin-left: 130%;
          margin-right: 0%;
          }
+         tr.data {
+            cursor: pointer;
+         }
       </style>
       <div align="center" class="container">
       <div align="center" class="headerTitle">
@@ -162,27 +165,8 @@
                      <!-- populate table from mysql database -->
                      <?php while($row = mysqli_fetch_array($search_result)):
                      if ($row['visits'] >= $minToSearch && $row['visits'] <= $maxToSearch) {
-                        echo '<tr>';
-                        echo '<td class="success">'; 
-                        foreach($row as $column) {
-                           
-                           if ($column == 'Birds') {
-                              echo "<a href='ExhibitDetailBirds.php?'</a>";
-                           }
-                           elseif ($column == 'Jungle') {
-                              echo "<a href='ExhibitDetailJungle.php?'</a>";
-                           }
-                           elseif ($column == 'Mountainous') {
-                              echo "<a href='ExhibitDetailMountainous.php?'</a>";
-                           }
-                           elseif ($column == 'Pacific') {
-                              echo "<a href='ExhibitDetailPacific.php?'</a>";
-                           }
-                           elseif ($column == 'Sahara') {
-                              echo "<a href='ExhibitDetailSahara.php?'</a>";
-                           }
-                        }
-                        echo $row['exhibit'];?></td>
+                        echo '<tr class="data">';?>
+                        <td class="success"><?php echo $row["exhibit"];?></td>
                         <td class="danger"><?php echo $row["visitTime"];?></td>
                         <td class="info"><?php echo $row["visits"];?></td>
                         </tr>
@@ -193,6 +177,19 @@
       </div>
 
 <script>
+$("document").ready(function() {
+    $("tr.data").click(function() {
+        var tableData = $(this).children("td").map(function() {
+            return $(this).text();
+        }).get();
+
+        var location = "./ExhibitDetail.php?";
+        location = location + "name=" + tableData[0];
+        location = location.replace(/ /g, "_");
+
+        window.location = location;
+    });
+});
 function sort(type) {
     window.location = './ExhibitHistory.php?sort=' + type;
 }

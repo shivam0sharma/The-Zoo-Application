@@ -1,3 +1,102 @@
+<?php
+        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
+        $sort;
+        if (isset($_GET['sort'])) {
+            $sort = $_GET['sort'];
+        }
+        if (isset($_POST['search'])) {
+            
+            $name = $_POST['name'];
+            $min_num = $_POST['min_animal_num'];
+            $max_num = $_POST['max_animal_num'];
+            $min_size = $_POST['min_exhibit_num'];
+            $max_size = $_POST['max_exhibit_num'];
+
+            if ($_POST['min_animal_num'] == 0) {
+                $min_num = 0;
+            } else {
+                $min_num = $_POST['min_animal_num'];
+            }
+            if ($_POST['max_animal_num'] == 0) {
+                $max_num = PHP_INT_MAX;
+            } else {
+                $max_num = $_POST['max_animal_num'];
+            }
+
+            if ($_POST['min_exhibit_num'] == 0) {
+                $min_size = 0;
+            } else {
+                $min_size = $_POST['min_exhibit_num'];
+            }
+            if ($_POST['max_exhibit_num'] == 0) {
+                $max_size = PHP_INT_MAX;
+            } else {
+                $max_size = $_POST['max_exhibit_num'];
+            }
+            if ($_POST['wfeat'] ) {
+
+                
+
+                if ($_POST['wfeat'] === "No") {
+                    $water_feature = "0";
+                } else if ($_POST['wfeat'] === "Yes") {
+                    $water_feature = "1";
+                }
+                $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
+                FROM Exhibit
+                JOIN Animal
+                ON Exhibit.name=Animal.exhibit
+                WHERE Exhibit.name like '%" . $name . "%'
+                AND size BETWEEN " . $min_size . " AND " . $max_size . "
+                AND waterFeature = " .$water_feature . "
+                GROUP BY Exhibit.name
+                HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
+                if(!empty($sort)) {
+                    $sql = $sql . ' ORDER BY Animal.' . $sort;
+                }
+                $result = mysqli_query($conn, $sql);
+            } else {
+
+                $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
+                FROM Exhibit
+                JOIN Animal
+                ON Exhibit.name=Animal.exhibit
+                WHERE Exhibit.name like '%" . $name . "%'
+                AND size BETWEEN " . $min_size . " AND " . $max_size . "
+                GROUP BY Exhibit.name
+                HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
+                if(!empty($sort)) {
+                    if ($sort == "animalCount") {
+                        $sql = $sql . ' ORDER BY ' . $sort;
+                    } else if ($sort == "waterFeature") {
+                        $sql = $sql . ' ORDER BY ' . $sort .' DESC';
+                    } else {
+                        $sql = $sql . ' ORDER BY Exhibit.' . $sort;
+                    }
+                    
+                }
+                $result = mysqli_query($conn, $sql);
+            }
+
+        } else {
+            $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
+            FROM Exhibit
+            JOIN Animal
+            ON Exhibit.name=Animal.exhibit
+            GROUP BY Exhibit.name";
+            if(!empty($sort)) {
+                if ($sort == "animalCount") {
+                    $sql = $sql . ' ORDER BY ' . $sort;
+                } else if ($sort == "waterFeature") {
+                    $sql = $sql . ' ORDER BY ' . $sort .' DESC';
+                } else {
+                    $sql = $sql . ' ORDER BY Exhibit.' . $sort;
+                }
+            }
+            $result = mysqli_query($conn, $sql);
+        }
+        ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +126,13 @@
          margin-top: -20%;
          margin-left: 130%;
          margin-right: 0%;
+         }
+         th {
+             cursor:pointer;
+         }
+
+         tr.data {
+             cursor:pointer;
          }
     </style>
 <div align="center" class="container">
@@ -77,121 +183,22 @@
         <a href="VisitorFunctionality.php"> <button type="button"> Go back! </button></a>
     </form>
 
-    <?php
-        $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
-
-        if (isset($_POST['search'])) {
-            if ($_POST['wfeat'] ) {
-             
-                $name = $_POST['name'];
-                $min_num = $_POST['min_animal_num'];
-                $max_num = $_POST['max_animal_num'];
-                $min_size = $_POST['min_exhibit_num'];
-                $max_size = $_POST['max_exhibit_num'];
-
-                if ($_POST['min_animal_num'] == 0) {
-                    $min_num = 0;
-                } else {
-                    $min_num = $_POST['min_animal_num'];
-                }
-                if ($_POST['max_animal_num'] == 0) {
-                    $max_num = PHP_INT_MAX;
-                } else {
-                    $max_num = $_POST['max_animal_num'];
-                }
-
-                if ($_POST['min_exhibit_num'] == 0) {
-                    $min_size = 0;
-                } else {
-                    $min_size = $_POST['min_exhibit_num'];
-                }
-                if ($_POST['max_exhibit_num'] == 0) {
-                    $max_size = PHP_INT_MAX;
-                } else {
-                    $max_size = $_POST['max_exhibit_num'];
-                }
-
-                if ($_POST['wfeat'] === "No") {
-                    $water_feature = "0";
-                } else if ($_POST['wfeat'] === "Yes") {
-                    $water_feature = "1";
-                }
-
-
-                $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
-                FROM Exhibit
-                JOIN Animal
-                ON Exhibit.name=Animal.exhibit
-                WHERE Exhibit.name like '%" . $name . "%'
-                AND size BETWEEN " . $min_size . " AND " . $max_size . "
-                AND waterFeature = " .$water_feature . "
-                GROUP BY Exhibit.name
-                HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
-                $result = mysqli_query($conn, $sql);
-            } else {
-                $name = $_POST['name'];
-                $min_num = $_POST['min_animal_num'];
-                $max_num = $_POST['max_animal_num'];
-                $min_size = $_POST['min_exhibit_num'];
-                $max_size = $_POST['max_exhibit_num'];
-
-                if ($_POST['min_animal_num'] == 0) {
-                    $min_num = 0;
-                } else {
-                    $min_num = $_POST['min_animal_num'];
-                }
-                if ($_POST['max_animal_num'] == 0) {
-                    $max_num = PHP_INT_MAX;
-                } else {
-                    $max_num = $_POST['max_animal_num'];
-                }
-
-                if ($_POST['min_exhibit_num'] == 0) {
-                    $min_size = 0;
-                } else {
-                    $min_size = $_POST['min_exhibit_num'];
-                }
-                if ($_POST['max_exhibit_num'] == 0) {
-                    $max_size = PHP_INT_MAX;
-                } else {
-                    $max_size = $_POST['max_exhibit_num'];
-                }
-
-                $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
-                FROM Exhibit
-                JOIN Animal
-                ON Exhibit.name=Animal.exhibit
-                WHERE Exhibit.name like '%" . $name . "%'
-                AND size BETWEEN " . $min_size . " AND " . $max_size . "
-                GROUP BY Exhibit.name
-                HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
-                $result = mysqli_query($conn, $sql);
-            }
-
-        } else {
-            $sql = "SELECT Exhibit.name, size, count(*) as animalCount, waterFeature
-            FROM Exhibit
-            JOIN Animal
-            ON Exhibit.name=Animal.exhibit
-            GROUP BY Exhibit.name";
-            $result = mysqli_query($conn, $sql);
-        }
-        ?>
+    
     <br>
     <br>
     <div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">NumAnimals</th>
-                    <th scope="col">Water</th>
+                    <th scope="col" onclick="sort('name')">Name</th>
+                    <th scope="col" onclick="sort('size')">Size</th>
+                    <th scope="col" onclick="sort('animalCount')">NumAnimals</th>
+                    <th scope="col" onclick="sort('waterFeature')">Water</th>
                 </tr>
             </thead>
 
             <?php while ($row = mysqli_fetch_array($result)) { ?>
-            <tr>
+            <tr class="data">
                 <td class="success"><?php echo $row['name']; ?></td>
                 <td class="danger"><?php echo $row['size']; ?></td>
                 <td class="info"><?php echo $row['animalCount']; ?></td>
@@ -209,7 +216,24 @@
     
     </div>
     </div>
+<script>
+$("document").ready(function() {
+        $("tr.data").click(function() {
+            var tableData = $(this).children("td").map(function() {
+                return $(this).text();
+            }).get();
 
+            var location = "./ExhibitDetail.php?";
+            location = location + "name=" + tableData[0];
+            location = location.replace(/ /g, "_");
+
+            window.location = location;
+        }); 
+    });
+function sort(type) {
+        window.location = './Search_Exhibits.php?sort=' + type;
+    }
+</script>
 </body>
 </div>
 </html>
