@@ -83,7 +83,6 @@
         if (!empty($sort)) {
             $query = $query . ' ORDER BY ShowTable.' . $sort;
         }
-        $query = "SELECT * FROM ShowTable";
         $search_result = mysqli_query($db, $query);
 
     }
