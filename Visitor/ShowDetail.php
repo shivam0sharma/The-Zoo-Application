@@ -12,22 +12,31 @@
     $details = mysqli_query($ntwk, $detailsQuery);
     $details = mysqli_fetch_array($details);
     $time = $details['showTime'];
-    
+    $currentTime = (mysqli_query($ntwk, "SELECT NOW() as time"));
+    $currentTime = mysqli_fetch_array($currentTime);
+
     if(isset($_POST['log'])) {
         $user = $_SESSION['username'];
         $insert = "INSERT INTO ShowVisit (visitor, showName, visitTime)
         VALUES ('$user', '$name', '$time')";
-
-        $insertCmd = mysqli_query($ntwk, $insert);
-        if ($insertCmd) {
-            $insert_result = '<div class="alert alert-success">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Log Recorded!</div>';
+        if ($currentTime['time'] > $time) {
+            $insertCmd = mysqli_query($ntwk, $insert);
+            if ($insertCmd) {
+                $insert_result = '<div class="alert alert-success">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Log Recorded!</div>';
+            } else {
+                $insert_result = '<div class="alert alert-danger">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                Log Not Recorded!</div>';
+            }
         } else {
             $insert_result = '<div class="alert alert-danger">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            Log Not Recorded!</div>';
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                You cannot visit a show in the future!</div>';
         }
+        
+        
         
     }
 
