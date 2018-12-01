@@ -152,11 +152,11 @@
             <?php while ($row = mysqli_fetch_array($result)) { ?>
 
                 <tr class="data">
-                    <td class="success"><?php echo $row['name']; ?></td>
-                    <td class="danger"><?php echo $row['species']; ?></td>
-                    <td class="info"><?php echo $row['exhibit']; ?></td>
-                    <td class="success"><?php echo $row['age']; ?></td>
-                    <td class="danger"><?php echo $row['animalType']; ?></td>
+                    <td class="data success"><?php echo $row['name']; ?></td>
+                    <td class="data danger"><?php echo $row['species']; ?></td>
+                    <td class="exhibit info"><?php echo $row['exhibit']; ?></td>
+                    <td class="data success"><?php echo $row['age']; ?></td>
+                    <td class="data danger"><?php echo $row['animalType']; ?></td>
                 </tr>
             <?php } ?>
 
@@ -165,14 +165,25 @@
     </div>
     <script>
         $("document").ready(function() {
-        $("tr.data").click(function() {
-            var tableData = $(this).children("td").map(function() {
+        $("td.data").click(function() {
+            var tableData = $(this).parent().children("td").map(function() {
                 return $(this).text();
             }).get();
 
             var location = "./AnimalDetail.php?";
             location = location + "name=" + tableData[0];
             location = location + "&species=" + tableData[1];
+            location = location.replace(/ /g, "_");
+
+            window.location = location;
+        });
+        $("td.exhibit").click(function() {
+            var tableData = $(this).children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            var location = "./ExhibitDetail.php?";
+            location = location + "name=" + tableData[2];
             location = location.replace(/ /g, "_");
 
             window.location = location;
