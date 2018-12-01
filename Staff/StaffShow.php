@@ -90,7 +90,7 @@ table, th, td {
     <div class="container">
         <a href="StaffHome.php"><button class="btn">Go Home</button></a>
     </div>
-    <div class="container">
+    <div>
         
         <table class="table table-bordered" id="staffShow">
             <thead>
