@@ -47,6 +47,9 @@
          margin-left: 130%;
          margin-right: 0%;
          }
+         tr.data {
+             cursor:pointer;
+         }
     </style>
     <div align="center" class="container">
     <title>Search for Shows</title>
