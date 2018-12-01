@@ -113,9 +113,9 @@
 
         <?php while ($row = mysqli_fetch_array($result)) { ?>
             <tr class="data">
-                <td class="success"><?php echo $row['name']; ?></td>
-                <td class="danger"><?php echo $row['location']; ?></td>
-                <td class="info"><?php echo $row['showTime']; ?></td>
+                <td class="data success"><?php echo $row['name']; ?></td>
+                <td class="exhibit danger"><?php echo $row['location']; ?></td>
+                <td class="data info"><?php echo $row['showTime']; ?></td>
             </tr>
         <?php } ?>
     </table>
@@ -125,8 +125,8 @@
 </body>
 <script>
 $("document").ready(function() {
-    $("tr.data").click(function() {
-        var tableData = $(this).children("td").map(function() {
+    $("td.data").click(function() {
+        var tableData = $(this).parent().children("td").map(function() {
             return $(this).text();
         }).get();
 
@@ -137,6 +137,17 @@ $("document").ready(function() {
 
         window.location = location;
     });
+    $("td.exhibit").click(function() {
+            var tableData = $(this).parent().children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            var location = "./ExhibitDetail.php?";
+            location = location + "name=" + tableData[1];
+            location = location.replace(/ /g, "_");
+
+            window.location = location;
+        }); 
 });
 function sort(type) {
     window.location = './Search_Shows.php?sort=' + type;

@@ -178,7 +178,7 @@
             window.location = location;
         });
         $("td.exhibit").click(function() {
-            var tableData = $(this).children("td").map(function() {
+            var tableData = $(this).parent().children("td").map(function() {
                 return $(this).text();
             }).get();
 
