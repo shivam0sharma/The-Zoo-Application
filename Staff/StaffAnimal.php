@@ -142,7 +142,7 @@ table {
     </div>
     <br>
     <div class="container">
-            <form class="form-inline" id="form" method="post" action="StaffAnimal.php">
+            <form class="form-inline" id="form" method="post" action="">
                     <div class="form-group row">
                         <label for="name" >Name: </label>
                         <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
@@ -156,7 +156,7 @@ table {
                             <option>Amphibian</option>
                             <option>Reptile</option>
                             <option>Fish</option>
-                            <option>invertebrate</option>
+                            <option>Invertebrate</option>
                         </datalist>
                     </div>
                     <br>

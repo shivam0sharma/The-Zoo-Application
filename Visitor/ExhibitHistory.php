@@ -121,9 +121,9 @@
          <img src="exhibit.jpg" alt="Zoo" width="100%;"></p><br>
       </div>
       <div class="row">
-         <form action="ExhibitHistory.php" method="post">
+         <form action="" method="post">
             
-            <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name" value="<?php echo isset($_POST['exhibitName']) ? $_POST['exhibitName'] : '';?>">
+            <strong>Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibitName" placeholder="Name" autocomplete="off" value="<?php echo isset($_POST['exhibitName']) ? $_POST['exhibitName'] : '';?>">
                <datalist id="Exhibits">
                   <option value="Birds">
                   <option value="Jungle">

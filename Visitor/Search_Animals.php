@@ -97,7 +97,7 @@
     </header>
     <br>
 
-    <form method="POST" action="Search_Animals.php" id="search_params">
+    <form method="POST" action="" id="search_params">
         Name: <input type="text" name="name" class="text" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         &emsp;Age: &ensp;Min -
         <input type="number" min="0" name="min_animal_num" class="age_num" value="<?php echo isset($_POST['min_animal_num']) ? $_POST['min_animal_num'] : '';?>">
@@ -108,16 +108,17 @@
         Species:
         <input type="text" name="species" class="text" value="<?php echo isset($_POST['species']) ? $_POST['species'] : '';?>">
         &emsp;&ensp;Type:
-        <input list="types" name="select_type" id="type" value="<?php echo isset($_POST['select_type']) ? $_POST['select_type'] : '';?>">
+        <input list="types" name="select_type" id="type" autocomplete="off" value="<?php echo isset($_POST['select_type']) ? $_POST['select_type'] : '';?>">
             <datalist id="types">
-            <option></option>
-            <option value="amphibian">
-            <option value="bird">
-            <option value="fish">
-            <option value="mammal">
+                <option>Mammal</option>
+                <option>Bird</option>
+                <option>Amphibian</option>
+                <option>Reptile</option>
+                <option>Fish</option>
+                <option>Invertebrate</option>
         </datalist>
         &emsp;Exhibit:
-        <input list="select_exhibit" name="select_exhibit" id="exhibit" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
+        <input list="select_exhibit" name="select_exhibit" id="exhibit" autocomplete="off" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
             <datalist id="select_exhibit">
             <option></option>
             <option value="birds">

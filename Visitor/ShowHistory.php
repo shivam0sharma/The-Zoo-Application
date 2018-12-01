@@ -94,14 +94,14 @@
          <img src="show.jpg" alt="Zoo" width="80%;"></p><br>
       </div>
       <div class="row">
-         <form action="ShowHistory.php" method="post">
+         <form action="" method="post">
             
                <strong>Show Name: &nbsp;</strong><input type="text" name="showName" placeholder="Name" value="<?php echo isset($_POST['showName']) ? $_POST['showName'] : '';?>">
                <br>
                <br>
                <strong>Show Date: &nbsp;</strong><input type="date" name="visitTime" value="<?php echo isset($_POST['visitTime']) ? $_POST['visitTime'] : '';?>">
                
-               <strong>&nbsp;&nbsp;Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" placeholder="Exhibits" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+               <strong>&nbsp;&nbsp;Exhibits: &nbsp; </strong><input list="Exhibits" name="exhibit" autocomplete="off" placeholder="Exhibits" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
                
                <datalist id="Exhibits">
                   <option value="Birds">

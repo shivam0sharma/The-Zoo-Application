@@ -1,5 +1,9 @@
 <?php
     session_start();
+    $sort;
+    if (isset($_GET['sort'])) {
+        $sort = $_GET['sort'];
+    }
     $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
     $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
     $password ="Efhjn754"; /* the password for phpmyadmin */
@@ -15,6 +19,14 @@
     $details = mysqli_query($ntwk, $detailsQuery);
     $details = mysqli_fetch_array($details);
     $exhibit = $details['name'];
+
+    $query = "SELECT * 
+    FROM Animal
+    WHERE exhibit like '%". $exhibit."%'";
+    if(!empty($sort)) {
+        $query = $query . ' ORDER BY Animal.' . $sort;
+    }
+    $search_result = mysqli_query($ntwk, $query);
 
     if(isset($_POST['log'])) {
         $user = $_SESSION['username'];
@@ -68,6 +80,10 @@ body {
   cursor:pointer;
 }
 th:hover{
+    cursor: pointer;
+}
+
+tr.data {
     cursor: pointer;
 }
 
@@ -127,11 +143,48 @@ th:hover{
         
         
     </div>
+
+    <table class="table table-bordered" id="animalTable">
+                <thead>
+                    <th onclick="sort('name')">Name</th>
+                    <th onclick="sort('species')">Species</th>
+                </thead>
+            <?php while($row = mysqli_fetch_array($search_result)) {?>
+                <tr class="data">
+                    <td><?php echo $row['name']; ?></td>
+                    <td><?php echo $row['species']; ?></td>
+                </tr>
+            <?php }?>
+                    
+        </table>
 </div>
 
 </body>
 </html>
 
 <script>
+$("document").ready(function() {
+        $("tr.data").click(function() {
+            var tableData = $(this).children("td").map(function() {
+                return $(this).text();
+            }).get();
+
+            var location = "./AnimalDetail.php?";
+            location = location + "name=" + tableData[0];
+            location = location + "&species=" + tableData[1];
+            location = location.replace(/ /g, "_");
+
+            window.location = location;
+        }); 
+    });
+function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var nameIn = queries[0].substring(index + 1);
+    nameIn = nameIn.replace(/_/g, " ");
+    window.location = './ExhibitDetail.php?name=' + nameIn + '&sort=' + type;
+}
 
 </script>

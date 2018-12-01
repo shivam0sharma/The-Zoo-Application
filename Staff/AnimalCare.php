@@ -132,7 +132,7 @@ th:hover{
         </div>
 
         <div class="row">
-            <form id="logForm"method="post" action=>
+            <form id="logForm"method="post" action="">
                 <textarea name="msg" rows="4" cols="50" maxlength="200"></textarea>
                 <button class="btn" type="submit" name="log">Log Notes</button>
                 <div class="col-sm-10 col-sm-offset-2">

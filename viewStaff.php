@@ -44,7 +44,7 @@ th.head {
 
     <a href="admin.php"><button class="btn">Go Home</button></a>
 
-    <form method="post" action="viewStaff.php" >
+    <form method="post" action="" >
         <div class="input-group">
             <label>Search</label>
             <input type="text" name="valueToSearch" placeholder="Value To Search">

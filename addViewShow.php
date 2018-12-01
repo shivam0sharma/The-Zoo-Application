@@ -43,7 +43,7 @@ th.head {
     <?php endif ?>
     <a href="admin.php"><button class="btn">Go Home</button></a>
 
-    <form method="post" action="addViewShow.php" >
+    <form method="post" action="" >
 
         <?php  include('errors.php'); ?>
 
@@ -56,7 +56,7 @@ th.head {
 
         <div class="input-group">
             <label>Exhibit Location</label>
-            <input list="location" name="location" value="<?php echo isset($_POST['location']) ? $_POST['location'] : '';?>">
+            <input list="location" name="location" autocomplete="off" value="<?php echo isset($_POST['location']) ? $_POST['location'] : '';?>">
             <datalist id="location">
             <?php
                 $locations = mysqli_query($db, "SELECT * FROM Exhibit");
@@ -68,7 +68,7 @@ th.head {
 
         <div class="input-group">
             <label>Staff</label>
-            <input list="staff" name="staff" value="<?php echo isset($_POST['staff']) ? $_POST['staff'] : '';?>">
+            <input list="staff" name="staff" autocomplete="off" value="<?php echo isset($_POST['staff']) ? $_POST['staff'] : '';?>">
             <datalist id="staff">
                 <?php
                 $staffs = mysqli_query($db, "SELECT * FROM Staff");

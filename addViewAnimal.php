@@ -44,7 +44,7 @@ th.head {
 
     <a href="admin.php"><button class="btn">Go Home</button></a>
 
-    <form method="post" action="addViewAnimal.php" >
+    <form method="post" action="" >
 
         <?php  include('errors.php'); ?>
 
@@ -63,7 +63,7 @@ th.head {
         <div class="input-group">
             <label>Exhibit</label>
             
-            <input list="exhibit" name="exhibit" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
+            <input list="exhibit" name="exhibit" autocomplete="off" value="<?php echo isset($_POST['exhibit']) ? $_POST['exhibit'] : '';?>">
             <datalist id="exhibit">
                 <?php
                 $exhibits = mysqli_query($db, "SELECT * FROM Exhibit");
@@ -75,7 +75,7 @@ th.head {
 
         <div class="input-group">
             <label>Animal Type</label>
-            <input list="animalType" name="animalType" value="<?php echo isset($_POST['animalType']) ? $_POST['animalType'] : '';?>">
+            <input list="animalType" name="animalType" autocomplete="off" value="<?php echo isset($_POST['animalType']) ? $_POST['animalType'] : '';?>">
             <datalist id="animalType">
                 <option value="Mammal"></option>
                 <option value="Bird"></option>

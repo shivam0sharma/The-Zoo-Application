@@ -78,17 +78,21 @@
     </header>
     <br>
 
-    <form method="post" action="Search_Shows.php" id="search_params">
+    <form method="post" action="" id="search_params">
         Name: 
         <input type="text" name="name" id="name" value="<?php echo isset($_POST['name']) ? $_POST['name'] : '';?>">
         &emsp;Date:
         <input type="date" name="date" id="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : '';?>">
+        <br>
         &emsp;Exhibit:
-        <select name="select_exhibit" id="exhibit" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
-            <option></option>
-            <option value="pacific">Pacific</option>
-            <option value="jungle">Jungle</option>
-        </select>
+        <input list="Exhibits" name="select_exhibit" placeholder="Exhibits" autocomplete="off" value="<?php echo isset($_POST['select_exhibit']) ? $_POST['select_exhibit'] : '';?>">
+        <datalist id="Exhibits">    
+            <option value="Birds">
+            <option value="Jungle">
+            <option value="Mountainous">
+            <option value="Pacific">
+            <option value="Sahara">
+        </datalist>
         <br>
         <br>
         <input type="submit" name="search" value="Search">
