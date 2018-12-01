@@ -109,7 +109,7 @@ th.head {
                 <th class="head" onclick="sort('name')">Name</th>
                 <th class="head" onclick="sort('species')">Species</th>
                 <th class="head" onclick="sort('exhibit')">Exhibit</th>
-                <th class="head" onclick="sort('age')">Age</th>
+                <th class="head" onclick="sort('age')">Age (years)</th>
                 <th class="head" onclick="sort('animalType')">Animal Type</th>
                 <th colspan="1">Action</th>
             </tr>

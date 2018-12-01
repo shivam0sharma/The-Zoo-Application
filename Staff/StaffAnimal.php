@@ -207,7 +207,7 @@ table {
                     <th onclick="sort('name')">Name</th>
                     <th onclick="sort('species')">Species</th>
                     <th onclick="sort('exhibit')">Exhibit</th>
-                    <th onclick="sort('age')">Age (months)</th>
+                    <th onclick="sort('age')">Age (years)</th>
                     <th onclick="sort('animalType')">Type</th>
                 </thead>
             <?php while($row = mysqli_fetch_array($search_result)) {?>

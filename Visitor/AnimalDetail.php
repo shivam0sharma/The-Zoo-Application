@@ -76,7 +76,7 @@ th:hover{
             </div>
             <div class="col-sm-2">
                 <?php 
-                    echo '<h4>Age: ' . $details['age'] . ' months';
+                    echo '<h4>Age: ' . $details['age'] . ' years';
                 ?>
             </div>
         </div>
