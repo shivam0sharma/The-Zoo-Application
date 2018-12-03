@@ -11,8 +11,6 @@
     $detailsQuery = "SELECT * FROM Animal WHERE (name like '%".$name."%' AND species LIKE '%".$species."%')";
     $details = mysqli_query($ntwk, $detailsQuery);
     $details = mysqli_fetch_array($details);
-    $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')";
-    $result = mysqli_query($ntwk, $query);
     
 ?>
 <!DOCTYPE html>
