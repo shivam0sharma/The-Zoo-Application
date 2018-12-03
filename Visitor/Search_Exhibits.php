@@ -2,7 +2,7 @@
         $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
         $sort;
         if (isset($_GET['sort'])) {
-            $sort = $_GET['sort'];
+            $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
         }
         if (isset($_POST['search'])) {
             
@@ -66,15 +66,18 @@
                 GROUP BY Exhibit.name
                 HAVING count(*) BETWEEN " . $min_num . " AND " . $max_num;
                 if(!empty($sort)) {
-                    if ($sort == "animalCount") {
+                    if ($sort == "animalCount" || $sort == "animalCount DESC") {
                         $sql = $sql . ' ORDER BY ' . $sort;
                     } else if ($sort == "waterFeature") {
                         $sql = $sql . ' ORDER BY ' . $sort .' DESC';
+                    } else if ($sort == "waterFeature DESC") {
+                        $sql = $sql . ' ORDER BY waterFeature ASC' ;
                     } else {
                         $sql = $sql . ' ORDER BY Exhibit.' . $sort;
                     }
                     
                 }
+
                 $result = mysqli_query($conn, $sql);
             }
 
@@ -85,10 +88,12 @@
             ON Exhibit.name=Animal.exhibit
             GROUP BY Exhibit.name";
             if(!empty($sort)) {
-                if ($sort == "animalCount") {
+                if ($sort == "animalCount" || $sort == "animalCount DESC") {
                     $sql = $sql . ' ORDER BY ' . $sort;
                 } else if ($sort == "waterFeature") {
                     $sql = $sql . ' ORDER BY ' . $sort .' DESC';
+                } else if ($sort == "waterFeature DESC") {
+                    $sql = $sql . ' ORDER BY waterFeature ASC' ;
                 } else {
                     $sql = $sql . ' ORDER BY Exhibit.' . $sort;
                 }
@@ -232,6 +237,14 @@ $("document").ready(function() {
         }); 
     });
 function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var sortIn = queries[0].substring(index + 1);
+    if (sortIn == type) {
+        type = type + "_DESC";
+    }
         window.location = './Search_Exhibits.php?sort=' + type;
     }
 </script>

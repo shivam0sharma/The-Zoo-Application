@@ -2,7 +2,7 @@
         $conn = mysqli_connect('academic-mysql.cc.gatech.edu', 'cs4400_group53', 'Efhjn754', 'cs4400_group53');
         $sort;
         if (isset($_GET['sort'])) {
-            $sort = $_GET['sort'];
+            $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
         }
         
         if (isset($_POST['search'])) {
@@ -150,6 +150,14 @@ $("document").ready(function() {
         }); 
 });
 function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var sortIn = queries[0].substring(index + 1);
+    if (sortIn == type) {
+        type = type + "_DESC";
+    }
     window.location = './Search_Shows.php?sort=' + type;
 }
 

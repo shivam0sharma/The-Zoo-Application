@@ -55,7 +55,7 @@
         header('location: addViewAnimal.php');
     }
     if (isset($_GET['sort'])) {
-        $sort = $_GET['sort'];
+        $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
     }
 
     if(isset($_POST['search'])) {

@@ -2,7 +2,7 @@
     session_start();
     $sort;
     if (isset($_GET['sort'])) {
-        $sort = $_GET['sort'];
+        $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
     }
     $hostname = "academic-mysql.cc.gatech.edu"; /*This is your hostname */
     $username = "cs4400_group53"; /*The user id you use to log in phpmyadmin */
@@ -183,6 +183,14 @@ function sort(type) {
     var index = queries[0].indexOf("=");
     var nameIn = queries[0].substring(index + 1);
     nameIn = nameIn.replace(/_/g, " ");
+    if (typeof queries[1] != "undefined") {
+        index = queries[1].indexOf("=");
+        var sortIn = queries[1].substring(index + 1);
+        if (sortIn == type) {
+            type = type + "_DESC";
+        }
+    }
+    
     window.location = './ExhibitDetail.php?name=' + nameIn + '&sort=' + type;
 }
 

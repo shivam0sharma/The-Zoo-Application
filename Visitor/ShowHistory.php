@@ -3,7 +3,7 @@
 
    $sort;
    if (isset($_GET['sort'])) {
-      $sort = $_GET['sort'];
+      $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
    }
       $nameToSearch = $_POST['showName'];
       $visitToSearch = $_POST['visitTime'];
@@ -159,7 +159,14 @@ $("document").ready(function() {
     });
 });
 function sort(type) {
-   
+   var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var sortIn = queries[0].substring(index + 1);
+    if (sortIn == type) {
+        type = type + "_DESC";
+    }
     window.location = './ShowHistory.php?sort=' + type;
 }
 </script>

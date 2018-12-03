@@ -3,7 +3,7 @@
 $sort;
 
 if (isset($_GET['sort'])) {
-    $sort = $_GET['sort'];
+    $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
 }
 if (isset($_POST['search'])) {
     $animalToSearch = $_POST['name'];
@@ -35,7 +35,7 @@ if (isset($_POST['search'])) {
     } else {
         $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
-        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort";
     }
 } else {
 
@@ -52,10 +52,9 @@ if (isset($_POST['search'])) {
     } else {
         $query = "SELECT * FROM `Animal` WHERE (name like '%".$animalToSearch."%' AND species LIKE '%".$speciesToSearch."%'
         AND exhibit LIKE '%".$exhibitToSearch."%' AND animalType LIKE '%".$typeToSearch."%'  
-        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort ASC";
+        AND age >= $ageMinToSearch AND age <= $ageMaxToSearch) ORDER BY Animal.$sort";
     }
 }
-
     $search_result = filterTable($query);
 // function to connect and execute the query
 function filterTable($query)
@@ -240,6 +239,14 @@ $("document").ready(function() {
 });
 
 function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var sortIn = queries[0].substring(index + 1);
+    if (sortIn == type) {
+        type = type + "_DESC";
+    }
     window.location = './StaffAnimal.php?sort=' + type;
 }
 </script>

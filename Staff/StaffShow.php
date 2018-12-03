@@ -23,7 +23,7 @@ if (isset($_GET['logout'])) {
     $user = $_SESSION['username'];
     $sort;
     if (isset($_GET['sort'])) {
-        $sort = $_GET['sort'];
+        $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
     }
     if (empty($sort)) {
         $query = "SELECT * FROM ShowTable WHERE host = '$user'";
@@ -117,6 +117,14 @@ table, th, td {
 
 <script>
 function sort(type) {
+    var queryString = decodeURIComponent(window.location.search);
+    queryString = queryString.substring(1);
+    var queries = queryString.split("&");
+    var index = queries[0].indexOf("=");
+    var sortIn = queries[0].substring(index + 1);
+    if (sortIn == type) {
+        type = type + "_DESC";
+    }
     window.location = './StaffShow.php?sort=' + type;
 }
 </script>

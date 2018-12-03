@@ -13,7 +13,7 @@
     $details = mysqli_fetch_array($details);
     $sort;
     if (isset($_GET['sort'])) {
-        $sort = $_GET['sort'];
+        $sort = str_replace('_', " ", htmlspecialchars($_GET["sort"]));
     }
     if (empty($sort)) {
         $query = "SELECT * FROM TreatmentNote WHERE (animal LIKE '%".$name."%' AND species LIKE '%".$species."%')";
@@ -186,6 +186,13 @@ function sort(type) {
     nameIn = nameIn.replace(/_/g, " ");
     index = queries[1].indexOf("=");
     var speciesIn = queries[1].substring(index + 1);
+    if (typeof queries[2] != "undefined") {
+        index = queries[2].indexOf("=");
+        var sortIn = queries[2].substring(index + 1);
+        if (sortIn == type) {
+            type = type + "_DESC";
+        }
+    }
 
     window.location = "./AnimalCare.php?name=" + nameIn + "&species=" + speciesIn + "&sort=" + type;
 }
